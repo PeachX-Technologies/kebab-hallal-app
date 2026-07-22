@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "795871078040",
+    "project_id": "tyer-dealership",
+    "storage_bucket": "tyer-dealership.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:795871078040:android:5a76198bf09ea998bcd2ed",
+        "android_client_info": {
+          "package_name": "com.mh.kebabhallal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATW2lGw19mKcj60_9nMclJGCsbK21CGaQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
