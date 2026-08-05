@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:795871078040:android:5a76198bf09ea998bcd2ed",
+        "mobilesdk_app_id": "1:795871078040:android:dddd58a8806125fabcd2ed",
         "android_client_info": {
-          "package_name": "com.kebabhallal.catania"
+          "package_name": "com.mh.kebabhallal"
         }
       },
       "oauth_client": [],
