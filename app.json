@@ -16,7 +16,7 @@
     ],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.mh.kebabhallal",
+      "bundleIdentifier": "com.kebabhallal.catania",
       "buildNumber": "1.0.0",
       "googleServicesFile": "./GoogleService-Info.plist",
       "infoPlist": {
@@ -28,7 +28,7 @@
         "foregroundImage": "./assets/icons/adaptive-icon.png",
         "backgroundColor": "#FFF8F0"
       },
-      "package": "com.mh.kebabhallal",
+      "package": "com.kebabhallal.catania",
       "googleServicesFile": "./google-services.json",
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",

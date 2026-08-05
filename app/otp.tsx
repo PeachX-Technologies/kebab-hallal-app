@@ -19,7 +19,12 @@ import Theme from '../theme';
 import { useOtpAutoFill } from 'expo-otp-autofill';
 
 const RESEND_COOLDOWN = 30;
-const TEST_PHONE = '+921111111111';
+// Numbers added in Firebase Console → Authentication → Phone → "Phone numbers for testing"
+// These bypass reCAPTCHA and real SMS entirely — safe to use during development
+const TEST_PHONES = new Set([
+  '+921111111111',
+  '+923338102886', // remove once device ban lifts and real SMS testing resumes
+]);
 
 export default function OtpScreen() {
   const { t } = useLocale();
@@ -79,10 +84,19 @@ export default function OtpScreen() {
       setConfirmationResult(result);
       setResendCooldown(RESEND_COOLDOWN);
     } catch (e: any) {
+      console.error('[sendOtp] code:', e?.code, '| message:', e?.message);
       if (e?.code === 'auth/too-many-requests') {
         setError(t('auth.otp.tooManyRequests'));
+      } else if (e?.code === 'auth/invalid-phone-number') {
+        setError(t('auth.otp.invalidPhone') ?? 'Invalid phone number format.');
+      } else if (e?.code === 'auth/quota-exceeded') {
+        setError('SMS quota exceeded. Please try again later.');
+      } else if (e?.code === 'auth/captcha-check-failed') {
+        setError('Security check failed. Please restart the app.');
+      } else if (e?.code === 'auth/missing-phone-number') {
+        setError('Phone number is missing.');
       } else {
-        setError(t('auth.otp.sendError'));
+        setError(`${t('auth.otp.sendError')} (${e?.code ?? 'unknown'})`);
       }
     } finally {
       setIsSendingOtp(false);
