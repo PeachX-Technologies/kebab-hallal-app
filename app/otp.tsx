@@ -14,17 +14,14 @@ import auth from '../utils/firebase';
 import Icon from '../components/Icon';
 import { useAuth } from '../context/AuthContext';
 import { useLocale } from '../context/LocaleContext';
-import { OTP_LENGTH } from '../constants';
+import { OTP_LENGTH, RESEND_COOLDOWN_SECONDS } from '../constants';
 import Theme from '../theme';
 import { useOtpAutoFill } from 'expo-otp-autofill';
 
-const RESEND_COOLDOWN = 30;
-// Numbers added in Firebase Console → Authentication → Phone → "Phone numbers for testing"
-// These bypass reCAPTCHA and real SMS entirely — safe to use during development
-const TEST_PHONES = new Set([
-  '+921111111111',
-  '+923338102886', // remove once device ban lifts and real SMS testing resumes
-]);
+// Guards against duplicate SMS sends: one send per session, with a per-phone
+// window so remounts (StrictMode, navigation) never fire a second SMS.
+let lastSentPhone: string | null = null;
+let lastSentAt = 0;
 
 export default function OtpScreen() {
   const { t } = useLocale();
@@ -35,12 +32,14 @@ export default function OtpScreen() {
   const [error, setError] = useState('');
   const [isVerifying, setIsVerifying] = useState(false);
   const [isSendingOtp, setIsSendingOtp] = useState(true);
-  const [resendCooldown, setResendCooldown] = useState(RESEND_COOLDOWN);
+  const [resendCooldown, setResendCooldown] = useState(RESEND_COOLDOWN_SECONDS);
   const [confirmationResult, setConfirmationResult] = useState<any>(null);
   const inputRef = useRef<TextInput>(null);
   const shakeAnim = useRef(new Animated.Value(0)).current;
   const cooldownRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const phoneRef = useRef(phone);
+  const sentRef = useRef(false);
+  const sendOtpRef = useRef<() => void>(() => {});
 
   const autoFill = useOtpAutoFill({ length: OTP_LENGTH, timeout: 0 });
 
@@ -63,15 +62,9 @@ export default function OtpScreen() {
 
   const sendOtp = useCallback(async () => {
     if (!phoneRef.current) return;
+    if (sentRef.current) return;
     setIsSendingOtp(true);
     setError('');
-
-    if (phoneRef.current === TEST_PHONE) {
-      setConfirmationResult({ confirm: async () => {} });
-      setResendCooldown(RESEND_COOLDOWN);
-      setIsSendingOtp(false);
-      return;
-    }
 
     if (!auth) {
       setError(t('auth.otp.sendError'));
@@ -79,10 +72,22 @@ export default function OtpScreen() {
       return;
     }
 
+    const now = Date.now();
+    if (
+      lastSentPhone === phoneRef.current &&
+      now - lastSentAt < RESEND_COOLDOWN_SECONDS * 1000
+    ) {
+      setResendCooldown(RESEND_COOLDOWN_SECONDS);
+      setIsSendingOtp(false);
+      return;
+    }
+
     try {
       const result = await auth().signInWithPhoneNumber(phoneRef.current);
+      lastSentPhone = phoneRef.current;
+      lastSentAt = now;
       setConfirmationResult(result);
-      setResendCooldown(RESEND_COOLDOWN);
+      setResendCooldown(RESEND_COOLDOWN_SECONDS);
     } catch (e: any) {
       console.error('[sendOtp] code:', e?.code, '| message:', e?.message);
       if (e?.code === 'auth/too-many-requests') {
@@ -103,9 +108,14 @@ export default function OtpScreen() {
     }
   }, [t]);
 
+  sendOtpRef.current = sendOtp;
+
   useEffect(() => {
-    sendOtp();
-  }, [sendOtp]);
+    if (sentRef.current) return;
+    sentRef.current = true;
+    sendOtpRef.current();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleVerify = useCallback(async () => {
     if (otp.length !== OTP_LENGTH) {
@@ -170,6 +180,7 @@ export default function OtpScreen() {
     setOtp('');
     setError('');
     autoFill.clear();
+    sentRef.current = false;
     sendOtp();
     inputRef.current?.focus();
   };

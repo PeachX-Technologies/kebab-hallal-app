@@ -1,5 +1,5 @@
 export const OTP_LENGTH = 6;
-export const SIMULATED_OTP = '123456';
+export const RESEND_COOLDOWN_SECONDS = 60;
 export const MIN_NAME_LENGTH = 2;
 export const SPLASH_DURATION_MS = 1500;
 export const MAX_CART_QUANTITY = 99;
