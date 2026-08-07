@@ -19,10 +19,8 @@ import { OTP_LENGTH, RESEND_COOLDOWN_SECONDS } from '../../constants';
 import Theme from '../../theme';
 import { useOtpAutoFill } from 'expo-otp-autofill';
 
-// Guards against duplicate SMS sends: one send per session, with a per-phone
-// window so remounts (StrictMode, re-renders) never fire a second SMS.
-let lastSentPhone: string | null = null;
-let lastSentAt = 0;
+// Guards against duplicate SMS sends: only one send in flight at a time, so
+// remounts (StrictMode, re-renders) never fire a second SMS concurrently.
 
 interface CheckoutOtpModalProps {
   visible: boolean;
@@ -41,7 +39,7 @@ export default function CheckoutOtpModal({ visible, name, phone, onVerified, onC
   const [error, setError] = useState('');
   const [isVerifying, setIsVerifying] = useState(false);
   const [isSendingOtp, setIsSendingOtp] = useState(true);
-  const [resendCooldown, setResendCooldown] = useState(RESEND_COOLDOWN_SECONDS);
+  const [resendCooldown, setResendCooldown] = useState(0);
   const [confirmationResult, setConfirmationResult] = useState<any>(null);
   const inputRef = useRef<TextInput>(null);
   const shakeAnim = useRef(new Animated.Value(0)).current;
@@ -50,6 +48,7 @@ export default function CheckoutOtpModal({ visible, name, phone, onVerified, onC
   const sentRef = useRef(false);
   const wasVisibleRef = useRef(false);
   const sendOtpRef = useRef<() => void>(() => {});
+  const sendingRef = useRef(false);
 
   const autoFill = useOtpAutoFill({ length: OTP_LENGTH, timeout: 0 });
 
@@ -77,39 +76,45 @@ export default function CheckoutOtpModal({ visible, name, phone, onVerified, onC
   const sendOtp = useCallback(async () => {
     if (!phoneRef.current) return;
     if (sentRef.current) return;
+    if (sendingRef.current) return;
+    sendingRef.current = true;
     setIsSendingOtp(true);
     setError('');
 
     if (!auth) {
       setError(t('auth.otp.sendError'));
       setIsSendingOtp(false);
-      return;
-    }
-
-    const now = Date.now();
-    if (
-      lastSentPhone === phoneRef.current &&
-      now - lastSentAt < RESEND_COOLDOWN_SECONDS * 1000
-    ) {
-      setResendCooldown(RESEND_COOLDOWN_SECONDS);
-      setIsSendingOtp(false);
+      sendingRef.current = false;
       return;
     }
 
     try {
+      console.log('[CheckoutOtpModal] Sending OTP to:', phoneRef.current);
       const result = await auth().signInWithPhoneNumber(phoneRef.current);
-      lastSentPhone = phoneRef.current;
-      lastSentAt = now;
+      console.log('[CheckoutOtpModal] OTP sent successfully');
       setConfirmationResult(result);
+      sentRef.current = true; // Mark as sent only on success
       setResendCooldown(RESEND_COOLDOWN_SECONDS);
     } catch (e: any) {
+      console.error('[CheckoutOtpModal] sendOtp error - code:', e?.code, '| message:', e?.message);
+      sentRef.current = false;
+      setResendCooldown(0);
       if (e?.code === 'auth/too-many-requests') {
         setError(t('auth.otp.tooManyRequests'));
+      } else if (e?.code === 'auth/invalid-phone-number') {
+        setError(t('auth.otp.invalidPhone') ?? 'Invalid phone number format.');
+      } else if (e?.code === 'auth/quota-exceeded') {
+        setError('SMS quota exceeded. Please try again later.');
+      } else if (e?.code === 'auth/captcha-check-failed') {
+        setError('Security check failed. Please try again.');
+      } else if (e?.code === 'auth/missing-phone-number') {
+        setError('Phone number is missing.');
       } else {
-        setError(t('auth.otp.sendError'));
+        setError(`${t('auth.otp.sendError')} (${e?.code ?? 'unknown'})`);
       }
     } finally {
       setIsSendingOtp(false);
+      sendingRef.current = false;
     }
   }, [t]);
 
@@ -117,11 +122,21 @@ export default function CheckoutOtpModal({ visible, name, phone, onVerified, onC
 
   useEffect(() => {
     if (visible && !wasVisibleRef.current) {
-      if (!sentRef.current) {
-        sentRef.current = true;
-        sendOtpRef.current();
-      }
+      // Reset state when modal opens
+      sentRef.current = false;
+      sendingRef.current = false;
+      setOtp('');
+      setError('');
+      setConfirmationResult(null);
+      setResendCooldown(0);
+      // Send OTP
+      sendOtpRef.current();
       setTimeout(() => inputRef.current?.focus(), 400);
+    }
+    if (!visible && wasVisibleRef.current) {
+      // Reset when modal closes
+      sentRef.current = false;
+      sendingRef.current = false;
     }
     wasVisibleRef.current = visible;
     // eslint-disable-next-line react-hooks/exhaustive-deps
