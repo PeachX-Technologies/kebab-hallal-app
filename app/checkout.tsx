@@ -501,6 +501,7 @@ export default function CheckoutScreen() {
             )}
 
             {/* ETA Card */}
+            {isDelivery && !scheduledEnabled && (
             <View style={styles.etaCard}>
               <View style={styles.etaRow}>
                 <View style={styles.etaIconWrap}>
@@ -512,6 +513,7 @@ export default function CheckoutScreen() {
                 </View>
               </View>
             </View>
+            )}
 
             <SectionCard icon="person-outline" title={t('checkout.yourDetails')}>
               <View style={styles.detailRow}>
@@ -539,7 +541,7 @@ export default function CheckoutScreen() {
           </View>
         </ScrollView>
 
-        <View style={styles.footer}>
+        <View style={[styles.footer, { paddingBottom: Theme.spacing.md + insets.bottom }]}>
           <Button
             title={t('checkout.confirmAndPay')}
             onPress={handleGoToPayment}
@@ -707,6 +709,7 @@ export default function CheckoutScreen() {
             </SectionCard>
 
             {/* ETA Card */}
+            {isDelivery && !scheduledEnabled && (
             <View style={styles.etaCard}>
               <View style={styles.etaRow}>
                 <View style={styles.etaIconWrap}>
@@ -718,6 +721,7 @@ export default function CheckoutScreen() {
                 </View>
               </View>
             </View>
+            )}
 
             {/* Delivery Map */}
             {isDelivery && (
@@ -825,7 +829,7 @@ export default function CheckoutScreen() {
         </ScrollView>
 
         {/* Footer */}
-        <View style={styles.footer}>
+        <View style={[styles.footer, { paddingBottom: Theme.spacing.md + insets.bottom }]}>
           <TouchableOpacity
             style={[styles.confirmButton, !isFormValid && styles.confirmButtonDisabled]}
             onPress={handleReviewOrder}

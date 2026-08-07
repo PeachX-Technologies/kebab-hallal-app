@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { countries, getCountryFromPhone } from '../data/countries';
 import type { Country } from '../data/countries';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Theme from '../theme';
 
 const defaultCountry = countries.find((c) => c.code === 'IT') ?? countries[0];
@@ -26,6 +27,7 @@ interface PhoneFieldProps {
 export default function PhoneField({ value, onChangeFormatted, hasError, onClearError }: PhoneFieldProps) {
   const inputRef = useRef<TextInput>(null);
   const isInternalRef = useRef(false);
+  const insets = useSafeAreaInsets();
 
   const [selected, setSelected] = useState<Country>(defaultCountry);
   const [phoneDigits, setPhoneDigits] = useState('');
@@ -116,7 +118,7 @@ export default function PhoneField({ value, onChangeFormatted, hasError, onClear
           style={styles.modalOverlay}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
-          <View style={styles.modalSheet}>
+          <View style={[styles.modalSheet, { paddingBottom: insets.bottom + Theme.spacing.lg }]}>
             <View style={styles.modalHeader}>
               <Text style={styles.modalTitle}>Select Country</Text>
               <TouchableOpacity

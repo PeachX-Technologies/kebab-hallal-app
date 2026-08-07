@@ -14,6 +14,7 @@ import auth from '../../utils/firebase';
 import Icon from '../Icon';
 import { useAuth } from '../../context/AuthContext';
 import { useLocale } from '../../context/LocaleContext';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { OTP_LENGTH, RESEND_COOLDOWN_SECONDS } from '../../constants';
 import Theme from '../../theme';
 import { useOtpAutoFill } from 'expo-otp-autofill';
@@ -34,6 +35,7 @@ interface CheckoutOtpModalProps {
 export default function CheckoutOtpModal({ visible, name, phone, onVerified, onClose }: CheckoutOtpModalProps) {
   const { t } = useLocale();
   const { login } = useAuth();
+  const insets = useSafeAreaInsets();
 
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
@@ -205,7 +207,7 @@ export default function CheckoutOtpModal({ visible, name, phone, onVerified, onC
         style={styles.overlay}
         behavior="padding"
       >
-        <View style={styles.sheet}>
+          <View style={[styles.sheet, { paddingBottom: Theme.spacing.xl + insets.bottom }]}>
           <ScrollView
             contentContainerStyle={styles.scrollContent}
             keyboardShouldPersistTaps="handled"
@@ -399,7 +401,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   otpBox: {
-    width: 44,
+    flex: 1,
+    maxWidth: 48,
     height: 52,
     borderRadius: Theme.borderRadii.md,
     alignItems: 'center',
@@ -425,10 +428,11 @@ const styles = StyleSheet.create({
     borderColor: Theme.colors.success,
   },
   otpDigit: {
-    fontSize: Theme.fontSizes.xl,
+    fontSize: Theme.fontSizes.lg,
     fontWeight: Theme.fontWeights.bold,
     fontFamily: Theme.fontFamily.bold,
     color: Theme.colors.text,
+    lineHeight: Theme.fontSizes.lg + 4,
   },
   otpDigitError: {
     color: Theme.colors.error,

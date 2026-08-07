@@ -14,13 +14,14 @@ const WEBHOOK_TIMEOUT = 30000;
 export default function ConfirmationScreen() {
   const { t } = useLocale();
   const { orders } = useOrders();
-  const { orderId, paymentIntentId, totalAmount, deliveryMethod, paymentMethod } =
+  const { orderId, paymentIntentId, totalAmount, deliveryMethod, paymentMethod, scheduledAt } =
     useLocalSearchParams<{
       orderId?: string;
       paymentIntentId?: string;
       totalAmount?: string;
       deliveryMethod?: string;
       paymentMethod?: string;
+      scheduledAt?: string;
     }>();
 
   const isCardPayment = !!paymentIntentId;
@@ -127,6 +128,7 @@ export default function ConfirmationScreen() {
               <Text style={styles.referenceValue}>{confirmedOrderId}</Text>
             </View>
 
+            {isDelivery && !scheduledAt && (
             <View style={styles.etaCard}>
               <Text style={styles.etaIcon}>🕐</Text>
               <View style={styles.etaTextContainer}>
@@ -134,6 +136,7 @@ export default function ConfirmationScreen() {
                 <Text style={styles.etaValue}>{t('confirmation.estimatedTimeValue')}</Text>
               </View>
             </View>
+            )}
 
             <View style={styles.modeCard}>
               <Text style={styles.modeIcon}>

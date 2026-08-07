@@ -427,7 +427,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   otpBox: {
-    width: 48,
+    flex: 1,
+    maxWidth: 48,
     height: 56,
     borderRadius: Theme.borderRadii.md,
     alignItems: 'center',
@@ -452,10 +453,11 @@ const styles = StyleSheet.create({
     borderColor: Theme.colors.success,
   },
   otpDigit: {
-    fontSize: Theme.fontSizes.xl,
+    fontSize: Theme.fontSizes.lg,
     fontWeight: Theme.fontWeights.bold,
     fontFamily: Theme.fontFamily.bold,
     color: Theme.colors.text,
+    lineHeight: Theme.fontSizes.lg + 4,
   },
   otpDigitError: {
     color: Theme.colors.error,

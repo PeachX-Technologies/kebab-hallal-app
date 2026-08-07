@@ -12,7 +12,7 @@ import { preloadMenuImages } from '../lib/menuImages';
 const splashModule = require('../assets/splash/splash-screen.png');
 
 export default function Index() {
-  const { isLoading } = useAuth();
+  const { isLoading, isAuthenticated } = useAuth();
   const [assetsReady, setAssetsReady] = useState(false);
   const [assetsError, setAssetsError] = useState(false);
   const mountedRef = useRef(false);
@@ -57,6 +57,8 @@ export default function Index() {
 
         if (!onboardingDone) {
           router.replace('/onboarding');
+        } else if (!isAuthenticated) {
+          router.replace('/login');
         } else {
           router.replace('/(tabs)');
         }
@@ -66,7 +68,7 @@ export default function Index() {
     }, assetsReady ? SPLASH_DURATION_MS : 0);
 
     return () => clearTimeout(timer);
-  }, [assetsReady, assetsError, isLoading]);
+  }, [assetsReady, assetsError, isLoading, isAuthenticated]);
 
   return (
     <Image source={splashModule} style={styles.image} resizeMode="cover" />

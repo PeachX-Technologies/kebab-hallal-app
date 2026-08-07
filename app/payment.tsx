@@ -120,7 +120,11 @@ export default function PaymentScreen() {
       setIsProcessing(false);
       router.replace({
         pathname: '/confirmation',
-        params: { orderId: order.id },
+        params: {
+          orderId: order.id,
+          deliveryMethod: orderMode,
+          ...(scheduledAtParam ? { scheduledAt: scheduledAtParam } : {}),
+        },
       });
     } catch (err: any) {
       console.error('Cash payment error:', err);
@@ -249,6 +253,7 @@ export default function PaymentScreen() {
           totalAmount: String(totalAmount),
           deliveryMethod: orderMode,
           paymentMethod: 'Stripe',
+          ...(scheduledAtParam ? { scheduledAt: scheduledAtParam } : {}),
         },
       });
     } catch (err: any) {
@@ -336,9 +341,9 @@ export default function PaymentScreen() {
         })}
       </View>
 
-      <View style={styles.footer}>
-        <TouchableOpacity
-          style={[styles.payButton, isProcessing && styles.payButtonDisabled]}
+      <View style={[styles.footer, { paddingBottom: Theme.spacing.md + insets.bottom }]}>
+          <TouchableOpacity
+            style={[styles.payButton, isProcessing && styles.payButtonDisabled]}
           onPress={handlePay}
           disabled={isProcessing}
           accessibilityLabel={t('payment.payNow')}

@@ -211,10 +211,11 @@ export function getCountry(code: string): Country | undefined {
   return countries.find((c) => c.code === code);
 }
 
+const sortedCountries: Country[] = [...countries].sort((a, b) => b.dial.length - a.dial.length);
+
 export function getCountryFromPhone(phone: string): { country: Country; digits: string } | undefined {
   const cleaned = phone.replace(/\s+/g, '');
-  const sorted = [...countries].sort((a, b) => b.dial.length - a.dial.length);
-  for (const c of sorted) {
+  for (const c of sortedCountries) {
     const dial = c.dial.replace(/-/g, '');
     if (cleaned.startsWith(dial)) {
       return { country: c, digits: cleaned.slice(dial.length) };
