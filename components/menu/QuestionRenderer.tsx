@@ -309,18 +309,16 @@ const styles = StyleSheet.create({
     letterSpacing: 0.2,
   },
   maxBadge: {
-    backgroundColor: Theme.colors.surface,
+    backgroundColor: Theme.colors.badge,
     paddingHorizontal: 7,
     paddingVertical: 3,
     borderRadius: Theme.borderRadii.full,
-    borderWidth: 1,
-    borderColor: Theme.colors.border,
   },
   maxText: {
     fontSize: 10,
-    fontWeight: Theme.fontWeights.medium,
-    fontFamily: Theme.fontFamily.medium,
-    color: Theme.colors.textSecondary,
+    fontWeight: Theme.fontWeights.semiBold,
+    fontFamily: Theme.fontFamily.semiBold,
+    color: Theme.colors.badgeText,
   },
 
   // ── Error ───────────────────────────────────────────────────

@@ -116,7 +116,8 @@ export default function PhoneField({ value, onChangeFormatted, hasError, onClear
       <Modal visible={showPicker} animationType="slide" transparent>
         <KeyboardAvoidingView
           style={styles.modalOverlay}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          enabled={Platform.OS === 'ios'}
         >
           <View style={[styles.modalSheet, { paddingBottom: insets.bottom + Theme.spacing.lg }]}>
             <View style={styles.modalHeader}>
