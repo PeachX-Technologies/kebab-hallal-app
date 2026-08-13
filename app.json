@@ -16,7 +16,7 @@
     ],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.kebabhallal.catania",
+      "bundleIdentifier": "com.mh.kebabhallal",
       "buildNumber": "1.0.0",
       "googleServicesFile": "./GoogleService-Info.plist",
       "infoPlist": {
