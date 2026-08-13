@@ -94,8 +94,9 @@
       "router": {},
       "googleMapsApiKey": "AIzaSyDrkW97zxFTrsjDRZf9Pvy6XuSYYDzb3u4",
       "eas": {
-        "projectId": "7b9be00b-a8ef-4375-831f-d8a4eef0660e"
+        "projectId": "9505604b-f89c-4356-a86f-0f511bc8456d"
       }
-    }
+    },
+    "owner": "imumer16"
   }
 }
