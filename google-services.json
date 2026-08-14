@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "469761697429-7nni2el38ls7qsvfn5r8ekn9vcvv47qf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mh.kebabhallal",
+            "certificate_hash": "b7416c5b24aaa075f30d91949c6a9cfe065a57dd"
+          }
+        },
+        {
+          "client_id": "469761697429-elbdkp5dmu5kah6kdklelv9lo9ua5v95.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mh.kebabhallal",
+            "certificate_hash": "b8df8130085e6deb7c17f422ac74eff769cacad8"
+          }
+        },
+        {
           "client_id": "469761697429-d9s9vmo8o492cfoh1htmig366564r7gg.apps.googleusercontent.com",
           "client_type": 3
         }

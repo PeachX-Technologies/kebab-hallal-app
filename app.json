@@ -40,6 +40,7 @@
       "bundler": "metro"
     },
     "plugins": [
+      "./plugins/withAndroidNotificationColorFix",
       "expo-router",
       "@react-native-firebase/app",
       "@react-native-firebase/auth",
@@ -80,8 +81,7 @@
         {
           "androidGoogleMapsApiKey": "AIzaSyDrkW97zxFTrsjDRZf9Pvy6XuSYYDzb3u4"
         }
-      ],
-      "./plugins/withAndroidNotificationColorFix"
+      ]
     ],
     "scheme": "kebab-hallal",
     "experiments": {
