@@ -80,7 +80,8 @@
         {
           "androidGoogleMapsApiKey": "AIzaSyDrkW97zxFTrsjDRZf9Pvy6XuSYYDzb3u4"
         }
-      ]
+      ],
+      "./plugins/withAndroidNotificationColorFix"
     ],
     "scheme": "kebab-hallal",
     "experiments": {
