@@ -1,0 +1,630 @@
+{
+  "common": {
+    "loading": "Caricamento...",
+    "error": "Errore",
+    "cancel": "Annulla",
+    "save": "Salva",
+    "ok": "OK",
+    "retry": "Riprova",
+    "back": "Indietro",
+    "close": "Chiudi",
+    "confirm": "Conferma",
+    "yes": "Sì",
+    "no": "No",
+    "currency": "€"
+  },
+  "nav": {
+    "home": "Home",
+    "cart": "Carrello",
+    "orders": "Ordini",
+    "settings": "Impostazioni"
+  },
+  "onboarding": {
+    "skip": "Salta",
+    "next": "Avanti",
+    "getStarted": "Inizia",
+    "chooseLanguage": "Scegli la tua lingua",
+    "chooseLanguageSubtitle": "Scegli la lingua con cui ti trovi più a tuo agio.\nPuoi cambiarla in qualsiasi momento.",
+    "chooseLanguageDesc": "Seleziona la tua lingua preferita per l'app",
+    "continue": "Continua",
+    "moreLangs": "Altre lingue in arrivo",
+    "step1of1": "Passo 1 di 1",
+    "slide1": {
+      "title": "Benvenuto da Kebab Hallal",
+      "description": "Il miglior kebab halal di Catania, ora direttamente sul tuo telefono."
+    },
+    "slide2": {
+      "title": "Ordina Facilmente",
+      "description": "Sfoglia il menu, personalizza il tuo ordine e scegli tra Ritiro in sala o Consegna a domicilio."
+    },
+    "slide3": {
+      "title": "Veloce e Sicuro",
+      "description": "Paga in contanti o con carta. Tieni traccia di tutti i tuoi ordini passati."
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Accedi",
+      "subtitle": "Inserisci il tuo nome e numero di telefono",
+      "namePlaceholder": "Il tuo nome",
+      "nameLabel": "Nome",
+      "phonePlaceholder": "+39 000 000 0000",
+      "phoneLabel": "Numero di telefono",
+      "submitButton": "Continua",
+      "nameError": "Il nome deve contenere almeno 2 caratteri",
+      "phoneError": "Inserisci un numero di telefono valido",
+      "nameRequired": "Il nome è obbligatorio",
+      "phoneRequired": "Il numero di telefono è obbligatorio",
+      "otpInfo": "Ti invieremo un codice a 6 cifre via SMS per confermare il tuo numero"
+    },
+    "otp": {
+      "title": "Verifica OTP",
+      "subtitle": "Inserisci il codice a 6 cifre inviato al numero",
+      "placeholder": "000000",
+      "submitButton": "Verifica",
+      "resendButton": "Invia di nuovo",
+      "incorrectError": "Codice OTP non corretto. Riprova.",
+      "hint": "Un codice a 6 cifre è stato inviato al tuo telefono",
+      "tooManyRequests": "Troppi tentativi. Riprova più tardi.",
+      "sendError": "Invio OTP fallito. Controlla il numero.",
+      "verifyError": "Verifica fallita. Riprova."
+    }
+  },
+  "orderMode": {
+    "title": "Come vuoi ordinare?",
+    "subtitle": "Scegli la modalità di ordine",
+    "takeaway": "Ritiro in sala",
+    "pickup": "Ritiro in sala",
+    "delivery": "Consegna a domicilio",
+    "takeawayDesc": "Ritira il tuo ordine al ristorante",
+    "pickupDesc": "Ritira il tuo ordine al ristorante",
+    "deliveryDesc": "Ricevi l'ordine a casa tua",
+    "confirm": "Conferma"
+  },
+  "home": {
+    "title": "Menu",
+    "allCategories": "Tutto",
+    "searchPlaceholder": "Cerca nel menu...",
+    "restaurantClosed": "Ristorante chiuso",
+    "addToCart": "Aggiungi al carrello",
+    "orderHere": "Ordina qui"
+  },
+  "itemDetail": {
+    "addToCart": "Aggiungi al carrello",
+    "quantity": "Quantità",
+    "total": "Totale",
+    "requiredQuestion": "Obbligatorio",
+    "selectRequired": "Seleziona un'opzione",
+    "maxSelections": "Massimo {{max}} selezioni",
+    "extraPrice": "+{{price}}"
+  },
+  "cart": {
+    "title": "Carrello",
+    "empty": "Il carrello è vuoto",
+    "emptySubtitle": "Aggiungi qualcosa dal menu",
+    "browseMenu": "Sfoglia il menu",
+    "subtotal": "Subtotale",
+    "proceedToCheckout": "Procedi al checkout",
+    "remove": "Rimuovi",
+    "itemCount": "{{count}} articolo",
+    "itemCount_plural": "{{count}} articoli",
+    "deliveryChargesNote": "Le spese di Consegna a domicilio verranno calcolate in base alla tua posizione",
+    "deliveryFee": "Spese di Consegna",
+    "total": "Totale",
+    "checkout": "Checkout",
+    "addAntipasti": "Aggiungi Antipasti"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "orderSummary": "Riepilogo ordine",
+    "orderMode": "Modalità ordine",
+    "deliveryAddress": "Indirizzo",
+    "deliveryAddressPlaceholder": "Inserisci il tuo indirizzo",
+    "deliveryNotes": "Note (opzionali)",
+    "deliveryNotesPlaceholder": "Istruzioni speciali",
+    "subtotal": "Subtotale",
+    "deliveryFee": "Spese di Consegna a domicilio",
+    "total": "Totale",
+    "confirmOrder": "Conferma ordine",
+    "addressRequired": "L'indirizzo di Consegna a domicilio è obbligatorio",
+    "takeaway": "Ritiro in sala",
+    "pickup": "Ritiro in sala",
+    "delivery": "Consegna a domicilio",
+    "searchAddressPlaceholder": "Cerca indirizzo...",
+    "tapMapToSelect": "Tocca la mappa per selezionare la tua zona di Consegna a domicilio",
+    "zoneDetected": "Zona {{zone}}",
+    "outsideDeliveryZone": "Fuori dall'area di Consegna a domicilio",
+    "outsideDeliveryZoneDesc": "Al momento non possiamo Consegna a domiciliore in questa posizione",
+    "yourName": "Nome",
+    "yourNamePlaceholder": "Il tuo nome",
+    "yourPhone": "Telefono",
+    "yourPhonePlaceholder": "+39 333 1234567",
+    "houseNumber": "Civico / Piano / Citofono",
+    "houseNumberPlaceholder": "es. 12A, 3° piano",
+    "cityPlaceholder": "Catania",
+    "minimumOrder": "Ordine Min.",
+    "estimatedDelivery": "Consegna stimata",
+    "estimatedTimeValue": "45-60 min",
+    "free": "GRATIS",
+    "subtotalMinNotMet": "Il totale del carrello (€{{subtotal}}) è inferiore al minimo di {{minAmount}} richiesto per la tua zona di consegna.",
+    "reviewOrder": "Rivedi ordine",
+    "orderConfirmed": "Ordine confermato!",
+    "confirmAndPay": "Conferma e paga",
+    "saveInfoHint": "Le tue informazioni verranno salvate per la prossima volta",
+    "qty": "Qt",
+    "each": "cad.",
+    "stepOf": "Passo 1 di 2",
+    "stepOf2": "Passo 2 di 2",
+    "moreItems": "altri articoli",
+    "yourDetails": "I tuoi dati",
+    "scheduled": {
+      "title": "Programma il tuo ordine",
+      "checkbox": "Vuoi programmare questo ordine?",
+      "description": "Seleziona una fascia oraria per quando vuoi che il tuo ordine sia pronto",
+      "noSlots": "Nessuna fascia oraria disponibile per oggi",
+      "scheduledOrder": "Programmato",
+      "lunch": "Pranzo",
+      "dinner": "Cena"
+    }
+  },
+  "payment": {
+    "title": "Pagamento",
+    "total": "Totale",
+    "selectMethod": "Seleziona metodo di pagamento",
+    "cash": "Contanti alla Consegna a domicilio/ritiro",
+    "card": "Pagamento con carta",
+    "payNow": "Paga ora",
+    "processing": "Elaborazione...",
+    "error": "Errore di pagamento",
+    "loginRequired": "Accedi per pagare con carta",
+    "errorGeneric": "Qualcosa è andato storto. Riprova.",
+    "emptyCart": "Il carrello è vuoto. Aggiungi articoli prima di pagare.",
+    "invalidAmount": "Importo non valido. Controlla il tuo ordine."
+  },
+  "failure": {
+    "title": "Pagamento Fallito",
+    "subtitle": "Non siamo riusciti a elaborare il pagamento",
+    "tryAgain": "Riprova",
+    "or": "oppure",
+    "contactUs": "Contattaci per assistenza",
+    "call": "Chiama",
+    "whatsapp": "WhatsApp"
+  },
+  "confirmation": {
+    "title": "Ordine confermato!",
+    "subtitle": "Il tuo ordine è stato ricevuto",
+    "orderReference": "Numero ordine",
+    "backToHome": "Torna al menu",
+    "thankYou": "Grazie per il tuo ordine!",
+    "processingTitle": "Completamento pagamento...",
+    "processingSubtitle": "Attendi mentre confermiamo il tuo ordine",
+    "estimatedTime": "Tempo stimato",
+    "estimatedTimeValue": "45-60 min",
+    "trackOrder": "Traccia Ordine"
+  },
+  "orders": {
+    "title": "I miei ordini",
+    "empty": "Nessun ordine ancora",
+    "emptySubtitle": "I tuoi ordini passati appariranno qui",
+    "orderReference": "Ordine",
+    "date": "Data",
+    "total": "Totale",
+    "takeaway": "Ritiro in sala",
+    "pickup": "Ritiro in sala",
+    "delivery": "Consegna a domicilio",
+    "items": "Articoli",
+    "status": {
+      "pending": "In attesa",
+      "preparing": "In preparazione",
+      "delivering": "In Consegna a domicilio",
+      "delivered": "Consegna a domicilioto",
+      "cancelled": "Annullato"
+    },
+    "deliveryMethod": "Modalità",
+    "paymentMethod": "Pagamento",
+    "deliveryAddress": "Indirizzo di Consegna a domicilio",
+    "additionalInfo": "Note",
+    "selectedOptions": "Opzioni",
+    "noOptions": "Nessuna opzione selezionata",
+    "cancelOrder": "Annulla ordine",
+    "eta": "Tempo stimato: ",
+    "remainingTime": "Consegna a domicilio in corso",
+    "orderReady": "Pronto per il ritiro",
+    "currentOrder": "Ordine in corso",
+    "pastOrders": "Ordini passati",
+    "orderId": "Ordine #{{id}}",
+    "callToCancel": "Chiama per annullare",
+    "whatsappToCancel": "WhatsApp per annullare",
+    "cancelConfirmTitle": "Sei sicuro?",
+    "cancelConfirmText": "Contattaci per annullare questo ordine",
+    "cancelNotPossible": "Ordine non annullabile",
+    "cancelNotPossibleText": "Questo ordine è già in elaborazione",
+    "trackOrder": "Traccia ordine"
+  },
+  "orderTracker": {
+    "title": "Tracciamento Ordine",
+    "orderRef": "Ordine {{id}}",
+    "live": "Live",
+    "notFound": "Ordine non trovato",
+    "backToMenu": "Torna al Menu",
+    "received": "Ordine Ricevuto",
+    "preparing": "In Preparazione",
+    "delivering": "In Consegna",
+    "delivered": "Consegnato",
+    "inProgress": "In corso...",
+    "completed": "Completato",
+    "deliveryTitle": "Info Consegna",
+    "scheduledFor": "Programmato per",
+    "mapPlaceholder": "La mappa apparirà qui",
+    "deliveryAddress": "Indirizzo di consegna",
+    "estimatedDelivery": "Consegna stimata",
+    "estimatedTimeValue": "45-60 min",
+    "originalEstimate": "Stima originale: ~{{time}} min",
+    "detailsTitle": "Dettagli Ordine",
+    "delivery": "Consegna",
+    "pickup": "Ritiro",
+    "scheduledOrder": "Programmato",
+    "subtotal": "Subtotale",
+    "deliveryFee": "Costo consegna",
+    "free": "GRATIS",
+    "paymentMethod": "Metodo di pagamento",
+    "cash": "Contanti",
+    "online": "Pagamento online",
+    "deliveryEta": "Tempo stimato",
+    "total": "Totale",
+    "driverTitle": "Il tuo Autista",
+    "driverName": "Autista",
+    "driverVehicle": "Auto",
+    "arriving": "In arrivo",
+    "estimatedArrival": "Arrivo stimato: {{time}}",
+    "callRestaurant": "Chiama ristorante",
+    "whatsappUs": "WhatsApp"
+  },
+  "settings": {
+    "title": "Impostazioni",
+    "language": "Lingua",
+    "languageIt": "Italiano",
+    "languageEn": "English",
+    "profile": "Profilo",
+    "name": "Nome",
+    "namePlaceholder": "Il tuo nome",
+    "deliveryAddress": "Indirizzo di Consegna a domicilio",
+    "deliveryAddressPlaceholder": "Il tuo indirizzo",
+    "houseNumber": "Civico / Piano / Citofono",
+    "houseNumberPlaceholder": "es. 12A, 3° piano",
+    "notifications": "Notifiche push",
+    "notificationsDesc": "Ricevi aggiornamenti sugli ordini",
+    "orderMode": "Modalità ordine",
+    "signIn": "Accedi",
+    "loginPrompt": "Accedi per gestire il tuo profilo e le preferenze",
+    "logout": "Esci",
+    "logoutConfirm": "Sei sicuro di voler uscire?",
+    "saved": "Salvato con successo",
+    "privacy": "Informativa sulla Privacy",
+    "terms": "Termini e Condizioni",
+    "legal": "Informazioni Legali",
+    "appearance": "Aspetto",
+    "darkMode": "Modalità Scura",
+    "darkModeDesc": "Passa alla combinazione di colori scuri"
+  },
+  "privacy": {
+    "title": "Informativa sulla Privacy",
+    "lastUpdated": "Ultimo aggiornamento: Luglio 2026",
+    "sections": {
+      "collection": {
+        "title": "Informazioni che Raccolgiamo",
+        "content": "Raccogliamo le informazioni che fornisci direttamente, come nome, numero di telefono e indirizzo di consegna quando effettui un ordine. Raccogliamo anche la cronologia degli ordini e le preferenze per migliorare la tua esperienza. Le informazioni sul dispositivo, i dati di localizzazione (con il tuo consenso) e i dati di utilizzo possono essere raccolti automaticamente per fornire e migliorare i nostri servizi."
+      },
+      "usage": {
+        "title": "Come Utilizziamo le Tue Informazioni",
+        "content": "Le tue informazioni vengono utilizzate per elaborare e consegnare gli ordini, comunicare aggiornamenti sullo stato dell'ordine, fornire assistenza clienti e migliorare il nostro menu e i servizi. Potremmo anche inviare messaggi promozionali occasionali se hai dato il consenso. I tuoi dati non vengono mai venduti a terze parti."
+      },
+      "cookies": {
+        "title": "Cookie e Tracciamento",
+        "content": "Utilizziamo cookie essenziali e tecnologie simili per garantire il corretto funzionamento della nostra piattaforma di ordinazione. I cookie analitici ci aiutano a capire come utilizzi l'app per migliorarla. Puoi controllare le preferenze dei cookie attraverso le impostazioni del tuo dispositivo."
+      },
+      "thirdParties": {
+        "title": "Servizi di Terze Parti",
+        "content": "Ci affidiamo a servizi di terze parti fidati per l'elaborazione dei pagamenti (Stripe), notifiche SMS, notifiche push e analisi. Questi fornitori sono contrattualmente obbligati a proteggere i tuoi dati e possono elaborarli solo in conformità con le nostre istruzioni."
+      },
+      "rights": {
+        "title": "I Tuoi Diritti",
+        "content": "Hai il diritto di accedere, correggere o cancellare i tuoi dati personali in qualsiasi momento. Puoi disattivare le comunicazioni di marketing, disabilitare il tracciamento della posizione o richiedere la portabilità dei dati. Per esercitare questi diritti, contattaci tramite l'app o visita il ristorante."
+      }
+    }
+  },
+  "terms": {
+    "title": "Termini e Condizioni",
+    "lastUpdated": "Ultimo aggiornamento: Luglio 2026",
+    "sections": {
+      "general": {
+        "title": "Termini Generali",
+        "content": "Effettuando un ordine tramite la nostra app, accetti i presenti Termini e Condizioni. Tutti gli ordini sono soggetti a disponibilità e conferma. Ci riserviamo il diritto di rifiutare o annullare qualsiasi ordine per motivi legittimi, inclusi sospetti di frode o errori di prezzo."
+      },
+      "orders": {
+        "title": "Effettuazione degli Ordini",
+        "content": "Gli ordini si considerano confermati una volta ricevuta la conferma d'ordine. È tua responsabilità assicurarti che tutti i dettagli dell'ordine siano corretti prima dell'invio. Le modifiche dopo la conferma potrebbero non essere sempre possibili; contatta direttamente il ristorante."
+      },
+      "payments": {
+        "title": "Pagamenti e Prezzi",
+        "content": "Tutti i prezzi sono espressi in Euro (€) e includono le tasse applicabili. Il pagamento può essere effettuato in contanti alla consegna/ritiro o con carta tramite Stripe. I dettagli della tua carta vengono elaborati in modo sicuro da Stripe e non vengono mai memorizzati sui nostri server."
+      },
+      "delivery": {
+        "title": "Consegna e Ritiro",
+        "content": "I tempi di consegna sono stimati e possono variare in base al volume degli ordini e alle condizioni del traffico. Consegniamo solo nelle nostre zone di consegna designate. Per gli ordini da asporto, ti preghiamo di presentarti all'orario selezionato per garantire la freschezza."
+      },
+      "cancellations": {
+        "title": "Cancellazioni e Rimborsi",
+        "content": "Gli ordini possono essere annullati solo se la preparazione non è ancora iniziata. Per annullare, contatta il ristorante il prima possibile. I rimborsi vengono elaborati a nostra discrezione e potrebbero richiedere 3-5 giorni lavorativi per i pagamenti con carta."
+      },
+      "liability": {
+        "title": "Limitazione di Responsabilità",
+        "content": "La nostra responsabilità è limitata al valore dell'ordine effettuato. Non siamo responsabili per ritardi causati da circostanze al di fuori del nostro controllo, inclusi ma non limitati a condizioni meteorologiche, traffico o problemi tecnici. Non siamo responsabili per la qualità del cibo una volta che lascia i nostri locali."
+      }
+    }
+  },
+  "restaurant": {
+    "closedTitle": "Ristorante Chiuso",
+    "closedDesc": "Siamo attualmente chiusi. I nostri orari di apertura sono:",
+    "lunchHours": "Pranzo: 11:00 - 15:00",
+    "dinnerHours": "Cena: 17:00 - 02:00"
+  },
+  "delivery": {
+    "unavailableTitle": "Consegna non disponibile",
+    "unavailableDesc": "Il servizio di consegna non è attualmente disponibile. Scegli il Ritiro in sala."
+  },
+  "overlays": {
+    "noInternet": {
+      "title": "Nessuna connessione",
+      "message": "Controlla la tua connessione internet e riprova.",
+      "retry": "Riprova",
+      "gotIt": "Ho capito"
+    },
+    "restaurantClosed": {
+      "title": "Ristorante chiuso",
+      "message": "Al momento il ristorante è chiuso.",
+      "schedule": "PRANZO 11:00-15:00 / CENA 17:00-02:00",
+      "nextOpening": "Prossima apertura",
+      "notAvailable": "Orario non disponibile",
+      "close": "Chiudi",
+      "lunch": "Pranzo",
+      "dinner": "Cena"
+    },
+    "deliveryUnavailable": {
+      "title": "Consegna a domicilio non disponibile",
+      "message": "Al momento non accettiamo ordini di Consegna a domicilio. Puoi comunque ordinare per l'Ritiro in sala!",
+      "close": "Chiudi"
+    }
+  },
+  "menu": {
+    "categories": {
+      "menu-completo": { "name": "Menù Completo" },
+      "kebab": { "name": "Kebab" },
+      "vegetariano": { "name": "Vegetariano" },
+      "burger": { "name": "Burger" },
+      "antipasti": { "name": "Antipasti" },
+      "bevande": { "name": "Bevande" }
+    },
+    "items": {
+      "MC01": { "name": "Menù Completo", "description": "kebab , vaschetta patatine, e 1 lattina 33cl a scelta" },
+      "MC04": { "name": "Menù Panino Kebab", "description": "Panino kebab, vaschetta patatine e lattina da 33cl a scelta" },
+      "MC05": { "name": "Menù Piatto Kebab", "description": "Piatto kebab, vaschetta patatine e 1 lattina 33cl a scelta" },
+      "MC06": { "name": "Menù Falafel", "description": "(panino, piadina o piatto) vaschetta di patatine, lattina a scelta" },
+      "MC07": { "name": "Menu Falafel Panino", "description": "1 panino falafel , bibita , vaschetta di patatine" },
+      "MC08": { "name": "Menù Chicken Burger", "description": "chicken burger, vaschetta patatine e lattina a scelta" },
+      "KB01": { "name": "Piadina Kebab", "description": "Piadina Kebab condimenti a scelta" },
+      "KB02": { "name": "Kebab Doppia Carne", "description": "Piadina kebab con doppia carne condimenti a scelta" },
+      "KB07": { "name": "Piatto Kebab", "description": "Kebab nel piatto condimenti a scelta" },
+      "KB09": { "name": "Panino Kebab", "description": "Pane arabo con condimenti a scelta" },
+      "VG01": { "name": "Piadina Falafel", "description": "Piadina con falafel e condimenti a scelta. 100% vegetariano" },
+      "VG04": { "name": "Piatto Falafel", "description": "PIATTO FALAFEL CON CONDIMENTI A SCELTA. 100% VEGETARIANO" },
+      "VG05": { "name": "Panino Falafel", "description": "PANE ARABO CON FALAFEL. CONDIMENTI A SCELTA. 100% VEGETARIANO" },
+      "BU01": { "name": "Chicken burger", "description": "Burger di pollo , condimenti a scelta" },
+      "BU02": { "name": "FISH BURGER", "description": "burger di pesce merluzzo, condimenti a scelta" },
+      "AN01": { "name": "Vaschetta di Patatine", "description": "salse a scelta" },
+      "AN02": { "name": "VAS. Patatine Twister", "description": "salse a scelta" },
+      "AN03": { "name": "VAS. Patatine Crisscut", "description": "salse a scelta" },
+      "AN04": { "name": "Alette Di Pollo", "description": "5 pz., salse a scelta" },
+      "AN05": { "name": "Chicken sticks", "description": "10 pz. Bastoncini di pollo , salse a scelta" },
+      "AN06": { "name": "Vaschetta Falafel", "description": "7 pz. , salse a scelta" },
+      "AN07": { "name": "Crispy Chicken", "description": "piadina con filetini di pollo e condimenti a scelta" },
+      "AN08": { "name": "Chicken Nuggets", "description": "12 pz. Crocchette di pollo , salse a scelta" },
+      "AN09": { "name": "Fish'N'Chips", "description": "9 pz. Nuggets de merluzzo + patatine fritte , salse a scelta" },
+      "AN10": { "name": "Anelli di Cipolla", "description": "12 pz. , salse a scelta" },
+      "AN11": { "name": "Samosa", "description": "1pz. - pollo , curry , sale , patatine fritte , cipolla , olio , farina tipo 00 , garam masala" },
+      "AN12": { "name": "Involtini primavera", "description": "1pz. - sfoglia di carta di riso , verza , curry , sale" },
+      "AN13": { "name": "Mozzarella Sticks", "description": "7 pz. Bastoncini di mozzarella rivestiti da una croccante panatura , salse a scelta" },
+      "AN14": { "name": "Vaschetta Kebab", "description": "CARNE KEBAB , salse a scelta" },
+      "AN15": { "name": "Chicken Pepitos 10pz.", "description": "10 Deliziosi bocconcini di pollo avvolti da una croccante panatura piacevolmente speziata , salse a scelta" },
+      "AN16": { "name": "Piadina Alla Nutella", "description": "piadina con nutella Ferrero" },
+      "AN17": { "name": "Baklava", "description": "1pz Baklava è un dessert ricco di miele e frutta secca originario dell'odierna Turchia" },
+      "AN18": { "name": "Donut", "description": "1pz." },
+      "BV19": { "name": "Acqua Naturale 500ML", "description": "Naturale" },
+      "BV20": { "name": "Acqua Frizzante 500ML", "description": "Frizzante" },
+      "BV08": { "name": "Coca Cola 33cl", "description": "Gusto originale Coca-Cola. Per gustarla al meglio, versala in un bicchiere con 2-3 cubetti di ghiaccio e una fettina di limone. Ideale da stappare in buona compagnia, durante i pasti o davanti ad un film o ad una partita." },
+      "BV10": { "name": "Coca Cola Zero 33cl", "description": "Bevanda senza zuccheri aggiunti, dall'inconfondibile gusto Coca-Cola. Per gustarla al meglio, versala in un bicchiere con ghiaccio e una fettina di limone. Ideale da stappare in buona compagnia, durante i pasti o davanti ad un film o ad una partita." },
+      "BV15": { "name": "Pepsi 33cl", "description": "" },
+      "BV16": { "name": "Pepsi Twist 33cl", "description": "" },
+      "BV11": { "name": "Sprite 33cl", "description": "Bevanda dal gusto deciso e fresco di limone e lime, con aromi naturali, da servire ghiacciata per un'esperienza di giusto ottimale e più intensa. Con confezione riciclabile." },
+      "BV14": { "name": "7 Up 33cl", "description": "" },
+      "BV09": { "name": "Fanta 33cl", "description": "Bevanda al gusto di arancia, da servire ghiacciata per dissetarti con gusto. Si abbina bene con tutti I tuoi snack, con confezione riciclabile." },
+      "BV07": { "name": "Coca Cola 450ML", "description": "Gusto originale Coca-Cola. Per gustarla al meglio, versala in un bicchiere con 2-3 cubetti di ghiaccio e una fettina di limone. Ideale da stappare in buona compagnia, durante i pasti o davanti ad un film o ad una partita." },
+      "BV12": { "name": "Lemon Soda 33cl", "description": "" },
+      "BV13": { "name": "Chinotto 33cl", "description": "" },
+      "BV17": { "name": "The Pesca 33cl", "description": "" },
+      "BV18": { "name": "The Limone 33cl", "description": "" },
+      "BV01": { "name": "Monster Energy 500ml", "description": "Monster Energy, dal gusto gradevole e intenso, è la combinazione di ingredienti giusti nelle giuste proporzioni" },
+      "BV04": { "name": "Monster Energy Zero Sugar 500ml", "description": "La Monster Energy Zero sugar ha la stessa carica energetica della classica Monster, con un gusto più leggero e senza calorie" },
+      "BV05": { "name": "Monster Energy Nitro 500ml", "description": "Monster Energy Nitro Super Dry lattina da 500 ml, bevanda energetica dal gusto eccezionale con miscela energetica e 160 mg di caffeina." },
+      "BV03": { "name": "Monster Energy Ultra 500ml", "description": "Il nostro team ci ha chiesto una nuova Monster... Un po' meno dolce, con un gusto più leggero e senza calorie, ma con la stessa carica energetica Monster di sempre. Di sicuro, il bianco è il nuovo nero. Così abbiamo creato... Monster Energy Ultra." },
+      "BV02": { "name": "Monster Mango Loco 500ml", "description": "Mango Loco, ispirato dal \"Dìa de Los Muertos\", è un mix paradisiaco di succhi esotici" },
+      "BV06": { "name": "Red Bull Energy Drink, 250ml", "description": "Red Bull è una bevanda energetica analcolica di colore ambrato brillante, con taurina e caffeina, è gassata ed ha un gusto leggermente dolce fruttato tendente alla fragola" }
+    },
+    "questions": {
+      "Q15": {
+        "text": "Kebab Falafel Dimensioni? (Seleziona uno)",
+        "options": {
+          "Piccolo (per bambini)": "Piccolo (per bambini)",
+          "Medio": "Medio",
+          "Grande": "Grande"
+        }
+      },
+      "Q11": {
+        "text": "Kebab? (Seleziona uno)",
+        "options": {
+          "Piccolo (per bambini)": "Piccolo (per bambini)",
+          "Medio": "Medio",
+          "Grande": "Grande"
+        }
+      },
+      "Q12": {
+        "text": "Kebab? (Seleziona uno)",
+        "options": {
+          "Piccolo (per bambini)": "Piccolo (per bambini)",
+          "Medio": "Medio",
+          "Grande": "Grande"
+        }
+      },
+      "Q13": {
+        "text": "Kebab Falafel Dimensioni? (Seleziona uno)",
+        "options": {
+          "Piccolo (per bambini)": "Piccolo (per bambini)",
+          "Medio": "Medio",
+          "Grande": "Grande"
+        }
+      },
+      "Q14": {
+        "text": "Doppia Carne? (Seleziona uno)",
+        "options": {
+          "Carne Normale": "Carne Normale",
+          "Doppia Carne": "Doppia Carne"
+        }
+      },
+      "Q02": {
+        "text": "Scegli le salse che desideri",
+        "options": {
+          "Salsa bianca": "Salsa bianca",
+          "Salsa piccante": "Salsa piccante",
+          "Salsa curry": "Salsa curry",
+          "Salsa greca": "Salsa greca",
+          "Salsa erbe cipollina": "Salsa erbe cipollina",
+          "Salsa BBQ": "Salsa BBQ",
+          "Salsa cilly": "Salsa cilly",
+          "Salsa tomato": "Salsa tomato",
+          "Maionese": "Maionese",
+          "Salsa Rosa": "Salsa Rosa"
+        }
+      },
+      "Q03": {
+        "text": "Scegli l'insalata che desideri",
+        "options": {
+          "Lattuga": "Lattuga",
+          "Pomodori": "Pomodori",
+          "Cipolla": "Cipolla",
+          "Lattuga mista": "Lattuga mista",
+          "Peperoni": "Peperoni",
+          "Verza": "Verza",
+          "Radicchio": "Radicchio",
+          "Insalata russa": "Insalata russa",
+          "MAIS": "Mais"
+        }
+      },
+      "Q04": {
+        "text": "Scegli i fritti che desideri",
+        "options": {
+          "Cipolla croccante": "Cipolla croccante",
+          "Cipolla cotta": "Cipolla cotta",
+          "Caponata": "Caponata",
+          "Pepe grattugiato": "Pepe grattugiato",
+          "Patatine fritte (Gratis)": "Patatine fritte (Gratis)"
+        }
+      },
+      "Q05": {
+        "text": "Desideri aggiungere la cipolla?",
+        "options": {
+          "Cipolla": "Cipolla",
+          "No cipolla": "No cipolla"
+        }
+      },
+      "Q06": {
+        "text": "Desideri aggiungere il piccante?",
+        "options": {
+          "Piccante": "Piccante",
+          "No piccante": "No piccante"
+        }
+      },
+      "Q07": {
+        "text": "Piadina",
+        "options": {
+          "Con Piadina": "Con Piadina",
+          "Senza piadina": "Senza piadina"
+        }
+      },
+      "Q08": {
+        "text": "Falafel",
+        "options": {
+          "Piadina falafel": "Piadina falafel",
+          "Panino falafel": "Panino falafel",
+          "Piatto falafel": "Piatto falafel"
+        }
+      },
+      "Q09": {
+        "text": "Salse",
+        "options": {
+          "Tomato": "Tomato",
+          "Maionese": "Maionese",
+          "Curry": "Curry",
+          "Erbe cipollina": "Erbe cipollina",
+          "Greca": "Greca",
+          "Cilly": "Cilly",
+          "Piccante": "Piccante",
+          "Salsa Bianca": "Salsa Bianca",
+          "BBQ": "BBQ",
+          "Salsa Rosa": "Salsa Rosa"
+        }
+      },
+      "Q10": {
+        "text": "Seleziona un gusto",
+        "options": {
+          "Donut Pinky": "Donut Pinky",
+          "Donut Party (Bianco)": "Donut Party (Bianco)",
+          "Donut Cioccolato": "Donut Cioccolato"
+        }
+      },
+      "Q16": {
+        "text": "Scegli la vaschetta",
+        "options": {
+          "Vas Patatine (Gratis)": "Vas Patatine (Gratis)",
+          "Patatine twister": "Patatine twister",
+          "Patatine crisscut": "Patatine crisscut",
+          "6 anelli di cipolla (Gratis)": "6 anelli di cipolla (Gratis)",
+          "6 chicken nuggets (Gratis)": "6 chicken nuggets (Gratis)",
+          "5 chicken stick (Gratis)": "5 chicken stick (Gratis)"
+        }
+      },
+      "Q01": {
+        "text": "Bibita (Seleziona uno)",
+        "options": {
+          "Acqua naturale": "Acqua naturale",
+          "Acqua frizzante": "Acqua frizzante",
+          "Coca Cola 33cl": "Coca Cola 33cl",
+          "Coca Cola Zero 33cl": "Coca Cola Zero 33cl",
+          "Fanta 33cl": "Fanta 33cl",
+          "Sprite 33cl": "Sprite 33cl",
+          "Pepsi 33cl": "Pepsi 33cl",
+          "Pepsi twist 33cl": "Pepsi twist 33cl",
+          "Lemon soda 33cl": "Lemon soda 33cl",
+          "Chinotto 33cl": "Chinotto 33cl",
+          "The pesca 33cl": "The pesca 33cl",
+          "The limone 33cl": "The limone 33cl",
+          "Coca 500ml": "Coca 500ml",
+          "Monster Energy 500ml": "Monster Energy 500ml",
+          "Monster Mango Loco 500ml": "Monster Mango Loco 500ml",
+          "Monster Nitro 500ml": "Monster Nitro 500ml",
+          "Monster Energy Zero 500ml": "Monster Energy Zero 500ml",
+          "Redbull 250ml": "Redbull 250ml"
+        }
+      }
+    }
+  }
+}

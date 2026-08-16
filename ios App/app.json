@@ -1,0 +1,122 @@
+{
+  "expo": {
+    "name": "Kebab Hallal",
+    "slug": "kebab-hallal-catania",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icons/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash/splash-screen.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFF8F0"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.mh.kebabhallal",
+      "buildNumber": "1.0.0",
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSCameraUsageDescription": "Kebab Hallal Catania uses the camera to let you scan payment cards securely and share photos of your orders and support requests.",
+        "NSPhotoLibraryUsageDescription": "Kebab Hallal Catania uses your photo library to let you attach photos of your orders and support requests.",
+        "NSPhotoLibraryAddUsageDescription": "Kebab Hallal Catania lets you save your order receipts and support images to your photo library.",
+        "NSContactsUsageDescription": "Kebab Hallal Catania uses your contacts only to autofill delivery recipient information when you choose to select a contact.",
+        "NSMicrophoneUsageDescription": "Kebab Hallal Catania does not record audio; this permission is reserved for future support, delivery, and payment features.",
+        "NSLocationWhenInUseUsageDescription": "Kebab Hallal Catania uses your location to confirm delivery areas and show nearby pickup points.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Kebab Hallal Catania uses your location while the app is in use to confirm delivery areas and show nearby pickup points.",
+        "NSFaceIDUsageDescription": "Kebab Hallal Catania uses Face ID optionally to securely authenticate you and speed up checkout.",
+        "NSUserTrackingUsageDescription": "Kebab Hallal Catania does not track you across other apps; this permission is reserved for ad personalization only if you opt in.",
+        "NSBluetoothAlwaysUsageDescription": "Kebab Hallal Catania uses Bluetooth only for optional in-store check-in and order pickup notifications.",
+        "NSBluetoothPeripheralUsageDescription": "Kebab Hallal Catania uses Bluetooth only for optional in-store check-in and order pickup notifications.",
+        "NSMotionUsageDescription": "Kebab Hallal Catania does not use motion data; this permission is reserved for future features.",
+        "NSCalendarsUsageDescription": "Kebab Hallal Catania lets you add your scheduled order delivery to your calendar.",
+        "NSRemindersUsageDescription": "Kebab Hallal Catania lets you add order pickup and delivery reminders to your Reminders app.",
+        "NSSpeechRecognitionUsageDescription": "Kebab Hallal Catania does not use speech recognition; this permission is reserved for future accessibility features."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icons/adaptive-icon.png",
+        "backgroundColor": "#FFF8F0"
+      },
+      "package": "com.mh.kebabhallal",
+      "googleServicesFile": "./google-services.json",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDrkW97zxFTrsjDRZf9Pvy6XuSYYDzb3u4"
+        }
+      },
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/icons/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router",
+      "./plugins/withRNFirebaseStaticFrameworks.js",
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth",
+      "@react-native-firebase/messaging",
+      "@react-native-firebase/analytics",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icons/notification-icon.png",
+          "color": "#D32F2F"
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow Kebab Hallal Catania to use your location.",
+          "locationWhenInUsePermission": "Allow Kebab Hallal Catania to use your location."
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "minSdkVersion": 24,
+            "ndkVersion": "27.0.12077973"
+          },
+          "ios": {
+            "useFrameworks": "static",
+            "forceStaticLinking": [
+              "RNFBApp",
+              "RNFBAuth",
+              "RNFBFirestore",
+              "RNFBMessaging",
+              "RNFBAnalytics"
+            ]
+          }
+        }
+      ],
+      [
+        "@stripe/stripe-react-native",
+        {
+          "enableApplePay": true,
+          "merchantIdentifier": "merchant.com.mh.kebabhallal"
+        }
+      ]
+    ],
+    "scheme": "kebab-hallal",
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "googleMapsApiKey": "AIzaSyDrkW97zxFTrsjDRZf9Pvy6XuSYYDzb3u4",
+      "eas": {
+        "projectId": "7b9be00b-a8ef-4375-831f-d8a4eef0660e"
+      }
+    }
+  }
+}
