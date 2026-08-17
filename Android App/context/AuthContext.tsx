@@ -40,13 +40,20 @@ const AuthContext = createContext<AuthState | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [firebaseUser, setFirebaseUser] = useState<FirebaseUser | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [authInitialized, setAuthInitialized] = useState(false);
+  const [profileLoaded, setProfileLoaded] = useState(false);
 
   useEffect(() => {
     const unsubscribe = auth().onAuthStateChanged((fbUser: any) => {
       setFirebaseUser(fbUser ? { uid: fbUser.uid, displayName: fbUser.displayName, phoneNumber: fbUser.phoneNumber, email: fbUser.email, emailVerified: fbUser.emailVerified } : null);
+      setAuthInitialized(true);
     });
-    return unsubscribe;
+    // Safety net: never block the splash forever if the auth listener is slow.
+    const timeout = setTimeout(() => setAuthInitialized(true), 10000);
+    return () => {
+      unsubscribe();
+      clearTimeout(timeout);
+    };
   }, []);
 
   // Register for push notifications on login if notifications were enabled
@@ -65,6 +72,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [firebaseUser]);
 
   useEffect(() => {
+    let cancelled = false;
+    setProfileLoaded(false);
+
     if (!firebaseUser) {
       Promise.all([
         AsyncStorage.getItem(STORAGE_KEYS.USER),
@@ -74,7 +84,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         AsyncStorage.getItem(STORAGE_KEYS.PROFILE_CITY),
       ])
         .then(([storedUser, address, phone, house, city]) => {
-          if (storedUser) {
+          if (!cancelled && storedUser) {
             const parsed = JSON.parse(storedUser) as User;
             setUser({
               ...parsed,
@@ -86,12 +96,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           }
         })
         .catch(() => {})
-        .finally(() => setIsLoading(false));
-      return;
+        .finally(() => {
+          if (!cancelled) setProfileLoaded(true);
+        });
+      return () => { cancelled = true; };
     }
 
     getUserProfile(firebaseUser.uid)
       .then((profile) => {
+        if (cancelled) return;
         if (profile) {
           const merged: User = {
             name: profile.name || '',
@@ -111,7 +124,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           AsyncStorage.getItem(STORAGE_KEYS.PROFILE_HOUSE),
           AsyncStorage.getItem(STORAGE_KEYS.PROFILE_CITY),
         ]).then(([storedUser, address, phone, house, city]) => {
-          if (storedUser) {
+          if (!cancelled && storedUser) {
             const parsed = JSON.parse(storedUser) as User;
             setUser({
               ...parsed,
@@ -124,7 +137,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         });
       })
       .catch(() => {})
-      .finally(() => setIsLoading(false));
+      .finally(() => {
+        if (!cancelled) setProfileLoaded(true);
+      });
+    return () => { cancelled = true; };
   }, [firebaseUser]);
 
   const login = useCallback(async (name: string, phone: string) => {
@@ -192,9 +208,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     });
   }, [firebaseUser]);
 
+  const isLoading = !authInitialized || !profileLoaded;
+
   return (
     <AuthContext.Provider
-      value={{ user, firebaseUser, isAuthenticated: user !== null, isLoading, login, logout, saveProfile }}
+      value={{ user, firebaseUser, isAuthenticated: firebaseUser !== null || user !== null, isLoading, login, logout, saveProfile }}
     >
       {children}
     </AuthContext.Provider>

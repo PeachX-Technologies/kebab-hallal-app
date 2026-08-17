@@ -70,30 +70,43 @@ export default function OrderTrackingScreen() {
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const unsubRef = useRef<(() => void) | null>(null);
+  const localOrderRef = useRef<Order | null>(null);
+
+  // Track locally-stored orders (e.g. guest orders that only exist on-device).
+  // A real order placed via Firestore will still resolve through subscribeOrder.
+  useEffect(() => {
+    if (!orderId) return;
+    const local = orders.find((o) => o.id === orderId) || null;
+    localOrderRef.current = local;
+    if (local) {
+      setOrderData(local);
+      setNotFound(false);
+      setLoading(false);
+    }
+  }, [orderId, orders]);
 
   useEffect(() => {
     if (!orderId) return;
-
-    const localOrder = orders.find((o) => o.id === orderId);
-    if (localOrder) {
-      setOrderData(localOrder);
-      setLoading(false);
-    }
 
     unsubRef.current = subscribeOrder(
       orderId,
       (data) => {
         if (!data) {
-          setNotFound(true);
+          if (!localOrderRef.current) {
+            setNotFound(true);
+          }
           setLoading(false);
           return;
         }
         const mapped = orderDataToOrder(orderId, data);
         setOrderData(mapped);
+        setNotFound(false);
         setLoading(false);
       },
       () => {
-        setNotFound(true);
+        if (!localOrderRef.current) {
+          setNotFound(true);
+        }
         setLoading(false);
       },
     );
