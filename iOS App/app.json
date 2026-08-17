@@ -2,22 +2,17 @@
   "expo": {
     "name": "Kebab Hallal",
     "slug": "kebab-hallal-catania",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icons/icon.png",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash/splash-screen.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#FFF8F0"
-    },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.mh.kebabhallal",
-      "buildNumber": "1.0.0",
+      "buildNumber": "1.0.1",
       "googleServicesFile": "./GoogleService-Info.plist",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
@@ -62,6 +57,15 @@
     "plugins": [
       "expo-router",
       "./plugins/withRNFirebaseStaticFrameworks.js",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#FFF8F0",
+          "image": "./assets/icons/adaptive-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain"
+        }
+      ],
       "@react-native-firebase/app",
       "@react-native-firebase/auth",
       "@react-native-firebase/messaging",

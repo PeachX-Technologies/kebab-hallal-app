@@ -6,11 +6,6 @@
     "orientation": "portrait",
     "icon": "./assets/icons/icon.png",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash/splash-screen.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#FFF8F0"
-    },
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -42,6 +37,15 @@
     "plugins": [
       "./plugins/withAndroidNotificationColorFix",
       "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#FFF8F0",
+          "image": "./assets/icons/adaptive-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain"
+        }
+      ],
       "@react-native-firebase/app",
       "@react-native-firebase/auth",
       "@react-native-firebase/messaging",

@@ -1,0 +1,8 @@
+/node_modules
+/.expo
+/android
+/ios
+*.log
+*.tmp
+eas_build_log*
+raw_build_log*
