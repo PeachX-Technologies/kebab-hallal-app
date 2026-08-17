@@ -1,0 +1,13 @@
+export const OTP_LENGTH = 6;
+export const RESEND_COOLDOWN_SECONDS = 60;
+export const MIN_NAME_LENGTH = 2;
+export const SPLASH_DURATION_MS = 1500;
+export const MAX_CART_QUANTITY = 99;
+export const MIN_CART_QUANTITY = 1;
+export const DEFAULT_LOCALE = 'it' as const;
+export const SUPPORTED_LOCALES = ['it', 'en'] as const;
+export const ORDER_REFERENCE_PREFIX = 'KH';
+export const RESTAURANT_NAME = 'Kebab Hallal Catania';
+export const RESTAURANT_PHONE = '+39 095 505670';
+export const RESTAURANT_PHONE_RAW = '+39095505670';
+export const RESTAURANT_ADDRESS = 'Via Monserrato, 27, Via Caronda, 188, 95129 Catania CT, Italy';
