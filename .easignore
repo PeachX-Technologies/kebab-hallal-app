@@ -1,0 +1,13 @@
+.git
+node_modules
+Android App/android
+Android App/.expo
+Android App/ios
+Android App/.idea
+Android App/.vscode
+Android App/logs.txt
+Android App/build_log*
+Android App/raw_log_*
+*.log
+*.tmp
+.DS_Store
