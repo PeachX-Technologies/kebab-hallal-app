@@ -5,6 +5,6 @@ export const CHECKOUT_SESSION_URL =
   'https://createcheckoutsession-rr7wmz43eq-uc.a.run.app';
 
 export const PAYMENT_INTENT_URL =
-  'https://us-central1-tyer-dealership.cloudfunctions.net/createPaymentIntent';
+  'https://us-central1-kebab-hallal.cloudfunctions.net/createPaymentIntent';
 
 export { STRIPE_PUBLISHABLE_KEY };
