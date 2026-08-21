@@ -76,7 +76,8 @@ export default function OrderTrackingScreen() {
   // A real order placed via Firestore will still resolve through subscribeOrder.
   useEffect(() => {
     if (!orderId) return;
-    const local = orders.find((o) => o.id === orderId) || null;
+    const local =
+      orders.find((o) => o.id === orderId || o.stripePaymentIntentId === orderId) || null;
     localOrderRef.current = local;
     if (local) {
       setOrderData(local);
@@ -90,7 +91,7 @@ export default function OrderTrackingScreen() {
 
     unsubRef.current = subscribeOrder(
       orderId,
-      (data) => {
+      (data, realDocId) => {
         if (!data) {
           if (!localOrderRef.current) {
             setNotFound(true);
@@ -98,7 +99,7 @@ export default function OrderTrackingScreen() {
           setLoading(false);
           return;
         }
-        const mapped = orderDataToOrder(orderId, data);
+        const mapped = orderDataToOrder(realDocId || orderId, data);
         setOrderData(mapped);
         setNotFound(false);
         setLoading(false);

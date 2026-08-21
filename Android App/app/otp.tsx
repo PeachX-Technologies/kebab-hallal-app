@@ -44,6 +44,10 @@ export default function OtpScreen() {
   const autoFill = useOtpAutoFill({ length: OTP_LENGTH, timeout: 0 });
 
   useEffect(() => {
+    phoneRef.current = phone;
+  }, [phone]);
+
+  useEffect(() => {
     mountedRef.current = true;
     return () => {
       mountedRef.current = false;
@@ -74,18 +78,20 @@ export default function OtpScreen() {
     sendingRef.current = true;
     setIsSendingOtp(true);
     setError('');
+    setResendCooldown(RESEND_COOLDOWN_SECONDS);
 
     if (!auth) {
       setError(t('auth.otp.sendError'));
       setIsSendingOtp(false);
       sendingRef.current = false;
+      setResendCooldown(0);
       return;
     }
 
     try {
       const result = await auth().signInWithPhoneNumber(phoneRef.current);
       setConfirmationResult(result);
-      setResendCooldown(RESEND_COOLDOWN_SECONDS);
+      sentRef.current = true;
     } catch (e: any) {
       console.error('[sendOtp] code:', e?.code, '| message:', e?.message);
       sentRef.current = false;
@@ -112,11 +118,10 @@ export default function OtpScreen() {
   sendOtpRef.current = sendOtp;
 
   useEffect(() => {
+    if (!phone) return;
     if (sentRef.current) return;
-    sentRef.current = true;
     sendOtpRef.current();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [phone]);
 
   const handleVerify = useCallback(async () => {
     if (otp.length !== OTP_LENGTH) {
