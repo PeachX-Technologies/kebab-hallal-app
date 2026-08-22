@@ -223,7 +223,7 @@ export default function PaymentScreen() {
         googlePay: {
           merchantCountryCode: 'IT',
           currencyCode: 'eur',
-          testEnv: true,
+          testEnv: false,
         },
       });
 
