@@ -547,7 +547,6 @@ export default function HomeScreen() {
                     item={item}
                     orderMode={orderMode}
                     onPress={(menuItem) => {
-                      if (!restaurantOpen) return;
                       setSelectedItem(menuItem);
                     }}
                   />

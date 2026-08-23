@@ -80,13 +80,11 @@ export default function CheckoutOtpModal({ visible, name, phone, onVerified, onC
     sendingRef.current = true;
     setIsSendingOtp(true);
     setError('');
-    setResendCooldown(RESEND_COOLDOWN_SECONDS);
 
     if (!auth) {
       setError(t('auth.otp.sendError'));
       setIsSendingOtp(false);
       sendingRef.current = false;
-      setResendCooldown(0);
       return;
     }
 
@@ -96,6 +94,7 @@ export default function CheckoutOtpModal({ visible, name, phone, onVerified, onC
       console.log('[CheckoutOtpModal] OTP sent successfully');
       setConfirmationResult(result);
       sentRef.current = true; // Mark as sent only on success
+      setResendCooldown(RESEND_COOLDOWN_SECONDS);
     } catch (e: any) {
       console.error('[CheckoutOtpModal] sendOtp error - code:', e?.code, '| message:', e?.message);
       sentRef.current = false;
@@ -280,7 +279,7 @@ export default function CheckoutOtpModal({ visible, name, phone, onVerified, onC
                 maxLength={OTP_LENGTH}
                 autoFocus
                 textContentType="oneTimeCode"
-                caretHidden
+                caretHidden={false}
               />
             </Animated.View>
 

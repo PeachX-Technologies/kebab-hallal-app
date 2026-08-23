@@ -279,7 +279,7 @@ export default function CheckoutOtpModal({ visible, name, phone, onVerified, onC
                 maxLength={OTP_LENGTH}
                 autoFocus
                 textContentType="oneTimeCode"
-                caretHidden
+                caretHidden={false}
               />
             </Animated.View>
 

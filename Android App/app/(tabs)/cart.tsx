@@ -75,7 +75,8 @@ export default function CartScreen() {
 
   const isDelivery = orderMode === 'delivery';
   const isClosed = !restaurantOpen;
-  const isBlocked = isClosed || (!deliveryAvailable && isDelivery);
+  const isDeliveryUnavailable = !deliveryAvailable && isDelivery;
+  const isBlocked = isClosed || isDeliveryUnavailable;
 
   const headerBlock = (
     <View style={[styles.header, { backgroundColor: colors.primary, paddingTop: insets.top + Theme.spacing.sm }]}>
@@ -93,42 +94,45 @@ export default function CartScreen() {
     </View>
   );
 
-  if (isBlocked) {
+  const renderBlockedBanner = () => {
+    if (!isBlocked) return null;
     return (
-      <View style={[styles.container, { backgroundColor: colors.background }]}>
-        {headerBlock}
-        <View style={styles.stateContainer}>
-          {isClosed ? (
-            <>
-              <View style={[styles.iconCircle, { backgroundColor: colors.error + '18' }]}>
-                <ClockSvg color={colors.error} />
-              </View>
-              <Text style={[styles.stateTitle, { color: colors.text }]}>{t('restaurant.closedTitle')}</Text>
-              <Text style={[styles.stateDesc, { color: colors.textSecondary }]}>{t('restaurant.closedDesc')}</Text>
-              <Text style={[styles.stateHours, { color: colors.textSecondary }]}>
+      <View style={styles.blockedBanner}>
+        {isClosed ? (
+          <>
+            <View style={[styles.bannerIconCircle, { backgroundColor: colors.error + '18' }]}>
+              <ClockSvg color={colors.error} />
+            </View>
+            <View style={styles.bannerTextWrap}>
+              <Text style={[styles.bannerTitle, { color: colors.text }]}>{t('restaurant.closedTitle')}</Text>
+              <Text style={[styles.bannerDesc, { color: colors.textSecondary }]}>{t('restaurant.closedDesc')}</Text>
+              <Text style={[styles.bannerHours, { color: colors.textSecondary }]}>
                 {t('restaurant.lunchHours')}
                 {'\n'}
                 {t('restaurant.dinnerHours')}
               </Text>
-            </>
-          ) : (
-            <>
-              <View style={[styles.iconCircle, { backgroundColor: '#F97316' + '18' }]}>
-                <TruckSvg color="#F97316" />
-              </View>
-              <Text style={[styles.stateTitle, { color: colors.text }]}>{t('delivery.unavailableTitle')}</Text>
-              <Text style={[styles.stateDesc, { color: colors.textSecondary }]}>{t('delivery.unavailableDesc')}</Text>
-            </>
-          )}
-        </View>
+            </View>
+          </>
+        ) : (
+          <>
+            <View style={[styles.bannerIconCircle, { backgroundColor: '#F97316' + '18' }]}>
+              <TruckSvg color="#F97316" />
+            </View>
+            <View style={styles.bannerTextWrap}>
+              <Text style={[styles.bannerTitle, { color: colors.text }]}>{t('delivery.unavailableTitle')}</Text>
+              <Text style={[styles.bannerDesc, { color: colors.textSecondary }]}>{t('delivery.unavailableDesc')}</Text>
+            </View>
+          </>
+        )}
       </View>
     );
-  }
+  };
 
   if (items.length === 0) {
     return (
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         {headerBlock}
+        {renderBlockedBanner()}
         <View style={styles.stateContainer}>
           <View style={[styles.iconCircleMuted, { backgroundColor: colors.surfaceElevated }]}>
             <BagSvg color={colors.textSecondary} />
@@ -143,6 +147,7 @@ export default function CartScreen() {
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       {headerBlock}
+      {renderBlockedBanner()}
 
       {antipastiItems.length > 0 && (
         <View style={styles.antipastiWrap}>
@@ -213,14 +218,19 @@ export default function CartScreen() {
         <View style={[styles.footerDivider, { backgroundColor: colors.border }]} />
 
         <TouchableOpacity
-          style={[styles.checkoutButton, { backgroundColor: colors.primary }]}
-          onPress={() => router.push('/checkout')}
-          activeOpacity={0.88}
+          style={[
+            styles.checkoutButton,
+            { backgroundColor: isBlocked ? colors.border : colors.primary },
+            isBlocked && styles.checkoutButtonDisabled,
+          ]}
+          onPress={isBlocked ? undefined : () => router.push('/checkout')}
+          activeOpacity={isBlocked ? 1 : 0.88}
           accessibilityLabel={t('cart.checkout')}
           accessibilityRole="button"
-          accessibilityState={{ disabled: false }}
+          accessibilityState={{ disabled: isBlocked }}
+          disabled={isBlocked}
         >
-          <Text style={styles.checkoutButtonText}>{t('cart.checkout')}</Text>
+          <Text style={[styles.checkoutButtonText, isBlocked && { color: colors.textDisabled }]}>{t('cart.checkout')}</Text>
           <ArrowSvg />
         </TouchableOpacity>
       </View>
@@ -322,6 +332,49 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     maxWidth: 200,
     lineHeight: 18,
+  },
+
+  blockedBanner: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: Theme.spacing.md,
+    padding: Theme.spacing.md,
+    marginHorizontal: Theme.spacing.md,
+    marginTop: Theme.spacing.sm,
+    borderRadius: Theme.borderRadii.lg,
+    backgroundColor: colors.surfaceElevated,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  bannerIconCircle: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
+    marginTop: 2,
+  },
+  bannerTextWrap: {
+    flex: 1,
+    gap: 2,
+  },
+  bannerTitle: {
+    fontSize: Theme.fontSizes.sm,
+    fontWeight: Theme.fontWeights.bold,
+    fontFamily: Theme.fontFamily.bold,
+  },
+  bannerDesc: {
+    fontSize: Theme.fontSizes.xs,
+    lineHeight: 18,
+  },
+  bannerHours: {
+    fontSize: Theme.fontSizes.xs,
+    lineHeight: 18,
+  },
+
+  checkoutButtonDisabled: {
+    opacity: 0.5,
   },
 
   listContent: {

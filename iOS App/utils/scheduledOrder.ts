@@ -34,7 +34,7 @@ export function generateTimeSlots(): TimeSlot[] {
       const label = `${pad(startHours)}:${pad(startMins)} - ${pad(endHours)}:${pad(endMins)}`;
 
       const slotDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), startHours, startMins);
-      if (range.startHour >= 24) {
+      if (slotStart >= 24 * 60) {
         slotDate.setDate(slotDate.getDate() + 1);
       }
 

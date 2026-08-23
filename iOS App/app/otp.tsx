@@ -85,6 +85,7 @@ export default function OtpScreen() {
     try {
       const result = await auth().signInWithPhoneNumber(phoneRef.current);
       setConfirmationResult(result);
+      sentRef.current = true;
       setResendCooldown(RESEND_COOLDOWN_SECONDS);
     } catch (e: any) {
       console.error('[sendOtp] code:', e?.code, '| message:', e?.message);
@@ -113,7 +114,6 @@ export default function OtpScreen() {
 
   useEffect(() => {
     if (sentRef.current) return;
-    sentRef.current = true;
     sendOtpRef.current();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -258,7 +258,7 @@ export default function OtpScreen() {
             </TouchableOpacity>
           </Animated.View>
 
-          {/* Hidden input */}
+          {/* Hidden input - positioned over OTP boxes for cursor blink */}
           <TextInput
             ref={inputRef}
             style={styles.hiddenInput}
@@ -269,6 +269,7 @@ export default function OtpScreen() {
             autoFocus
             textContentType="oneTimeCode"
             accessibilityLabel="OTP code input"
+            caretHidden={false}
           />
 
           {/* Error / Hint */}
@@ -470,9 +471,12 @@ const styles = StyleSheet.create({
   // Hidden input
   hiddenInput: {
     position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 56,
     opacity: 0,
-    width: 1,
-    height: 1,
+    zIndex: 10,
   },
 
   // Error / hint
