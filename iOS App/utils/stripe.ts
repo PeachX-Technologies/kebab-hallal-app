@@ -1,10 +1,10 @@
 const STRIPE_PUBLISHABLE_KEY =
-  'pk_test_51QFZXEH4vQcKiRavMZtP2fBH7CPkx2Gj3UCNL1G2sN28ezf3tB7edBuRRQwSWUFewGwU8dbsRsNThSsp2DlQfWyh00vDuAwuf4';
+  'pk_live_51RCTWmK3xxnUAWTzcIAkZJ1Afhq9VfKbHbE4P2UK9zi6oR1IxW1h47KEgH29BLwxNgLatadp7sK3RVR6NpVgDZRe00OWcC0q4Y';
 
 export const CHECKOUT_SESSION_URL =
   'https://createcheckoutsession-rr7wmz43eq-uc.a.run.app';
 
 export const PAYMENT_INTENT_URL =
-  'https://us-central1-tyer-dealership.cloudfunctions.net/createPaymentIntent';
+  'https://us-central1-kebab-hallal.cloudfunctions.net/createPaymentIntent';
 
 export { STRIPE_PUBLISHABLE_KEY };

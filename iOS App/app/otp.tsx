@@ -29,7 +29,7 @@ export default function OtpScreen() {
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const [isVerifying, setIsVerifying] = useState(false);
-  const [isSendingOtp, setIsSendingOtp] = useState(true);
+  const [isSendingOtp, setIsSendingOtp] = useState(false);
   const [resendCooldown, setResendCooldown] = useState(0);
   const [confirmationResult, setConfirmationResult] = useState<any>(null);
   const inputRef = useRef<TextInput>(null);
@@ -42,6 +42,10 @@ export default function OtpScreen() {
   const mountedRef = useRef(true);
 
   const autoFill = useOtpAutoFill({ length: OTP_LENGTH, timeout: 0 });
+
+  useEffect(() => {
+    phoneRef.current = phone;
+  }, [phone]);
 
   useEffect(() => {
     mountedRef.current = true;
@@ -113,10 +117,10 @@ export default function OtpScreen() {
   sendOtpRef.current = sendOtp;
 
   useEffect(() => {
+    if (!phone) return;
     if (sentRef.current) return;
     sendOtpRef.current();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [phone]);
 
   const handleVerify = useCallback(async () => {
     if (otp.length !== OTP_LENGTH) {

@@ -34,8 +34,8 @@ export default function ConfirmationScreen() {
 
   useEffect(() => {
     const handler = () => true;
-    BackHandler.addEventListener('hardwareBackPress', handler);
-    return () => BackHandler.removeEventListener('hardwareBackPress', handler);
+    const subscription = BackHandler.addEventListener('hardwareBackPress', handler);
+    return () => subscription.remove();
   }, []);
 
   // Animation values
@@ -65,7 +65,7 @@ export default function ConfirmationScreen() {
 
     const checkOrders = () => {
       const matched = orders.find(
-        (o) => o.stripePaymentIntentId === paymentIntentId,
+        (o) => o.stripePaymentIntentId === paymentIntentId || o.id === paymentIntentId,
       );
       if (matched) {
         setConfirmedOrderId(matched.id);
@@ -153,12 +153,14 @@ export default function ConfirmationScreen() {
               <Button
                 title={t('confirmation.trackOrder')}
                 onPress={() => {
-                  if (!confirmedOrderId || !hasValidOrderId.current) {
+                  const targetId = confirmedOrderId || paymentIntentId || orderId;
+                  if (!targetId) {
                     router.replace('/(tabs)/orders');
                     return;
                   }
                   router.replace({
-                    pathname: `/order/${confirmedOrderId}`,
+                    pathname: '/order/[orderId]',
+                    params: { orderId: targetId },
                   });
                 }}
                 style={styles.trackButton}

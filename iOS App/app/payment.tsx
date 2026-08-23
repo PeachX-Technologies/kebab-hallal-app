@@ -184,15 +184,15 @@ export default function PaymentScreen() {
         orderSource: 'mobile-app',
         ...(orderMode === 'delivery'
           ? {
-              zoneCost: parseFloat(deliveryFee || '0'),
-              deliveryAddress: {
-                house: checkoutHouseNumber || '',
-                street: checkoutAddress || deliveryAddress || '',
-                city: checkoutCity || 'Catania',
-                lon: locationLng ? parseFloat(locationLng) : 0,
-                lat: locationLat ? parseFloat(locationLat) : 0,
-              },
-            }
+            zoneCost: parseFloat(deliveryFee || '0'),
+            deliveryAddress: {
+              house: checkoutHouseNumber || '',
+              street: checkoutAddress || deliveryAddress || '',
+              city: checkoutCity || 'Catania',
+              lon: locationLng ? parseFloat(locationLng) : 0,
+              lat: locationLat ? parseFloat(locationLat) : 0,
+            },
+          }
           : {}),
         additionalInfo: deliveryNotes || '',
         ...(scheduledAtParam ? { scheduledAt: scheduledAtParam } : {}),
@@ -223,7 +223,7 @@ export default function PaymentScreen() {
         googlePay: {
           merchantCountryCode: 'IT',
           currencyCode: 'eur',
-          testEnv: true,
+          testEnv: false,
         },
       });
 
@@ -342,8 +342,8 @@ export default function PaymentScreen() {
       </View>
 
       <View style={[styles.footer, { paddingBottom: Theme.spacing.md + insets.bottom }]}>
-          <TouchableOpacity
-            style={[styles.payButton, isProcessing && styles.payButtonDisabled]}
+        <TouchableOpacity
+          style={[styles.payButton, isProcessing && styles.payButtonDisabled]}
           onPress={handlePay}
           disabled={isProcessing}
           accessibilityLabel={t('payment.payNow')}

@@ -188,9 +188,35 @@ export function subscribeUserOrders(
 
 export function subscribeOrder(
   orderId: string,
-  onChange: (data: OrderData | null) => void,
+  onChange: (data: OrderData | null, realDocId?: string) => void,
   onError?: (err: any) => void,
 ) {
+  if (!orderId) {
+    onChange(null);
+    return () => {};
+  }
+
+  if (orderId.startsWith('pi_')) {
+    return db
+      .collection('orders')
+      .where('stripePaymentIntentId', '==', orderId)
+      .limit(1)
+      .onSnapshot(
+        (snap: any) => {
+          if (snap?.docs?.length > 0) {
+            const doc = snap.docs[0];
+            onChange((doc.data?.() as OrderData) ?? null, doc.id);
+          } else {
+            onChange(null);
+          }
+        },
+        (err: any) => {
+          console.warn('subscribeOrder by payment intent error:', err);
+          onError?.(err);
+        },
+      );
+  }
+
   return db
     .collection('orders')
     .doc(orderId)
@@ -198,9 +224,22 @@ export function subscribeOrder(
       (snap: any) => {
         if (snap?.exists) {
           const data = snap.data?.();
-          onChange(data ?? null);
+          onChange(data ?? null, snap.id);
         } else {
-          onChange(null);
+          // Fallback: check if orderId is a payment intent in stripePaymentIntentId field
+          db.collection('orders')
+            .where('stripePaymentIntentId', '==', orderId)
+            .limit(1)
+            .get()
+            .then((querySnap: any) => {
+              if (querySnap?.docs?.length > 0) {
+                const doc = querySnap.docs[0];
+                onChange((doc.data?.() as OrderData) ?? null, doc.id);
+              } else {
+                onChange(null);
+              }
+            })
+            .catch(() => onChange(null));
         }
       },
       (err: any) => {
