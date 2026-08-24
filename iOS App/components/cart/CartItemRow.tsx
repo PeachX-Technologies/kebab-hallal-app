@@ -42,14 +42,14 @@ const TrashSvg = ({ color }: { color: string }) => (
 export default function CartItemRow({ item, onIncrement, onDecrement, onRemove }: CartItemRowProps) {
   const { t } = useLocale();
   const { colors } = useTheme();
-  const isMinQty = item.quantity <= 1;
+  const isMinQty = (item?.quantity ?? 1) <= 1;
   const [optionsExpanded, setOptionsExpanded] = useState(false);
 
   const MAX_VISIBLE_OPTIONS = 3;
 
   const flatOptions = useMemo(() => {
     const result: { name: string; price: number }[] = [];
-    for (const value of Object.values(item.selectedOptions ?? {})) {
+    for (const value of Object.values(item?.selectedOptions ?? {})) {
       const arr = Array.isArray(value) ? value : [value];
       arr.forEach((opt: any) => {
         if (opt && typeof opt === 'object' && opt.name) {
@@ -60,17 +60,20 @@ export default function CartItemRow({ item, onIncrement, onDecrement, onRemove }
       });
     }
     return result;
-  }, [item.selectedOptions]);
+  }, [item?.selectedOptions]);
 
   const displayOptions = optionsExpanded ? flatOptions : flatOptions.slice(0, MAX_VISIBLE_OPTIONS);
   const remainingCount = flatOptions.length - MAX_VISIBLE_OPTIONS;
+
+  const itemId = item?.itemId ?? '';
+  const itemName = itemId ? t(`menu.items.${itemId}.name`) : t('cart.unknownItem');
 
   return (
     <View style={[styles.row, { backgroundColor: colors.surface, borderColor: colors.border }]}>
       <View style={[styles.thumbWrap, { backgroundColor: colors.surfaceElevated }]}>
         <MenuImage
-          key={item.id}
-          filename={item.image}
+          key={item?.id}
+          filename={item?.image}
           style={styles.thumb}
           resizeMode="contain"
           fallback={<Text style={styles.thumbEmoji}>🥙</Text>}
@@ -80,12 +83,12 @@ export default function CartItemRow({ item, onIncrement, onDecrement, onRemove }
       <View style={styles.info}>
         <View style={styles.nameRow}>
           <Text style={[styles.name, { color: colors.text }]} numberOfLines={1}>
-            {t(`menu.items.${item.itemId}.name`)}
+            {itemName}
           </Text>
           <TouchableOpacity
             onPress={onRemove}
             hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-            accessibilityLabel={`${t('cart.remove')} ${t(`menu.items.${item.itemId}.name`)}`}
+            accessibilityLabel={`${t('cart.remove')} ${itemName}`}
           >
             <TrashSvg color={colors.textSecondary} />
           </TouchableOpacity>

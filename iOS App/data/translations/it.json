@@ -106,6 +106,7 @@
     "subtotal": "Subtotale",
     "proceedToCheckout": "Procedi al checkout",
     "remove": "Rimuovi",
+    "unknownItem": "Articolo sconosciuto",
     "itemCount": "{{count}} articolo",
     "itemCount_plural": "{{count}} articoli",
     "deliveryChargesNote": "Le spese di Consegna a domicilio verranno calcolate in base alla tua posizione",

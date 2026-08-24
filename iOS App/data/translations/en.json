@@ -106,6 +106,7 @@
     "subtotal": "Subtotal",
     "proceedToCheckout": "Proceed to checkout",
     "remove": "Remove",
+    "unknownItem": "Unknown item",
     "itemCount": "{{count}} item",
     "itemCount_plural": "{{count}} items",
     "deliveryChargesNote": "Delivery charges will be applied based on your location",

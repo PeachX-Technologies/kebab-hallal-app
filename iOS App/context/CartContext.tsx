@@ -55,11 +55,31 @@ type Action =
   | { type: 'LOAD_CART'; items: CartItem[] }
   | { type: 'RECALCULATE'; menuItems: Record<string, MenuItem>; orderMode: OrderMode };
 
+function isValidCartItem(item: any): item is CartItem {
+  return (
+    item &&
+    typeof item === 'object' &&
+    typeof item.id === 'string' &&
+    typeof item.itemId === 'string' &&
+    typeof item.itemName === 'string' &&
+    typeof item.image === 'string' &&
+    typeof item.basePrice === 'number' &&
+    typeof item.baseDeliveryPrice === 'number' &&
+    item.selectedOptions !== null &&
+    typeof item.selectedOptions === 'object' &&
+    typeof item.quantity === 'number' &&
+    typeof item.totalPrice === 'number' &&
+    typeof item.totalDeliveryPrice === 'number' &&
+    typeof item.adPrice === 'number'
+  );
+}
+
 function computeDerived(items: CartItem[]): CartState {
+  const validItems = items.filter(isValidCartItem);
   return {
-    items,
-    itemCount: items.reduce((sum, i) => sum + i.quantity, 0),
-    subtotal: calculateSubtotal(items),
+    items: validItems,
+    itemCount: validItems.reduce((sum, i) => sum + i.quantity, 0),
+    subtotal: calculateSubtotal(validItems),
   };
 }
 
@@ -88,7 +108,8 @@ function cartReducer(state: CartState, action: Action): CartState {
       return computeDerived([]);
     }
     case 'LOAD_CART': {
-      return computeDerived(action.items);
+      const validItems = Array.isArray(action.items) ? action.items.filter(isValidCartItem) : [];
+      return computeDerived(validItems);
     }
     case 'RECALCULATE': {
       const newItems = state.items.map((item) => {

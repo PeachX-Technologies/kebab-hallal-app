@@ -67,9 +67,18 @@ const CartSvg = () => (
 
 export default function ItemDetailSheet({ item, visible, onClose }: ItemDetailSheetProps) {
   const { t } = useLocale();
-  const { getQuestion } = useMenu();
-  const { addItem } = useCart();
-  const { orderMode } = useAppState();
+  let getQuestion: (id: string) => any = () => undefined;
+  let addItem: any = () => {};
+  let orderMode: 'pickup' | 'delivery' = 'pickup';
+  try {
+    getQuestion = useMenu().getQuestion;
+  } catch {}
+  try {
+    addItem = useCart().addItem;
+  } catch {}
+  try {
+    orderMode = useAppState().orderMode;
+  } catch {}
 
   const [localItem, setLocalItem] = useState<MenuItem | null>(item);
   const [quantity, setQuantity] = useState(1);
@@ -86,8 +95,9 @@ export default function ItemDetailSheet({ item, visible, onClose }: ItemDetailSh
   }, [item]);
 
   const activeItem = item ?? localItem;
-  const itemName = activeItem ? t(`menu.items.${activeItem.id}.name`) : '';
-  const itemDescription = activeItem ? t(`menu.items.${activeItem.id}.description`) : '';
+  const itemId = activeItem?.id ?? '';
+  const itemName = itemId ? t(`menu.items.${itemId}.name`) : t('cart.unknownItem');
+  const itemDescription = activeItem ? t(`menu.items.${itemId}.description`) : '';
 
   const questions = (activeItem?.questions ?? [])
     .map((qId) => getQuestion(qId))
@@ -113,7 +123,7 @@ export default function ItemDetailSheet({ item, visible, onClose }: ItemDetailSh
     if (!sel) return [];
     const names = Array.isArray(sel) ? sel : [sel];
     return names
-      .map((name) => q.options.find((o) => o.name === name))
+      .map((name) => q.options.find((o: NormalizedOption) => o.name === name))
       .filter(Boolean) as NormalizedOption[];
   });
 
