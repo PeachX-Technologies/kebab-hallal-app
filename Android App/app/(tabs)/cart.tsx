@@ -98,32 +98,32 @@ export default function CartScreen() {
     if (!isBlocked) return null;
     return (
       <View style={styles.blockedBanner}>
-        {isClosed ? (
-          <>
-            <View style={[styles.bannerIconCircle, { backgroundColor: colors.error + '18' }]}>
-              <ClockSvg color={colors.error} />
-            </View>
-            <View style={styles.bannerTextWrap}>
-              <Text style={[styles.bannerTitle, { color: colors.text }]}>{t('restaurant.closedTitle')}</Text>
-              <Text style={[styles.bannerDesc, { color: colors.textSecondary }]}>{t('restaurant.closedDesc')}</Text>
-              <Text style={[styles.bannerHours, { color: colors.textSecondary }]}>
-                {t('restaurant.lunchHours')}
-                {'\n'}
-                {t('restaurant.dinnerHours')}
-              </Text>
-            </View>
-          </>
-        ) : (
-          <>
-            <View style={[styles.bannerIconCircle, { backgroundColor: '#F97316' + '18' }]}>
-              <TruckSvg color="#F97316" />
-            </View>
-            <View style={styles.bannerTextWrap}>
-              <Text style={[styles.bannerTitle, { color: colors.text }]}>{t('delivery.unavailableTitle')}</Text>
-              <Text style={[styles.bannerDesc, { color: colors.textSecondary }]}>{t('delivery.unavailableDesc')}</Text>
-            </View>
-          </>
-        )}
+{isClosed ? (
+            <>
+              <View style={[styles.bannerIconCircle, { backgroundColor: colors.errorLight }]}>
+                <ClockSvg color={colors.error} />
+              </View>
+              <View style={styles.bannerTextWrap}>
+                <Text style={[styles.bannerTitle, { color: colors.text }]}>{t('restaurant.closedTitle')}</Text>
+                <Text style={[styles.bannerDesc, { color: colors.textSecondary }]}>{t('restaurant.closedDesc')}</Text>
+                <Text style={[styles.bannerHours, { color: colors.textSecondary }]}>
+                  {t('restaurant.lunchHours')}
+                  {'\n'}
+                  {t('restaurant.dinnerHours')}
+                </Text>
+              </View>
+            </>
+          ) : (
+            <>
+              <View style={[styles.bannerIconCircle, { backgroundColor: colors.warningLight }]}>
+                <TruckSvg color={colors.warning} />
+              </View>
+              <View style={styles.bannerTextWrap}>
+                <Text style={[styles.bannerTitle, { color: colors.text }]}>{t('delivery.unavailableTitle')}</Text>
+                <Text style={[styles.bannerDesc, { color: colors.textSecondary }]}>{t('delivery.unavailableDesc')}</Text>
+              </View>
+            </>
+          )}
       </View>
     );
   };
@@ -157,32 +157,37 @@ export default function CartScreen() {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.antipastiScroll}
           >
-            {antipastiItems.map((ant) => (
-              <TouchableOpacity
-                key={ant.id}
-                style={[styles.antipastiCard, { backgroundColor: colors.surface, borderColor: colors.border }]}
-                onPress={() => handleAntipastiPress(ant)}
-                activeOpacity={0.85}
-              >
-                <View style={[styles.antipastiCardImageWrap, { backgroundColor: colors.surface }]}>
-                  <MenuImage
-                    filename={ant.image}
-                    style={styles.antipastiCardImage}
-                    resizeMode="contain"
-                    placeholderStyle={{ width: '100%', height: '100%' }}
-                    fallback={<Text style={styles.antipastiCardEmoji}>🥙</Text>}
-                  />
-                  <View style={[styles.antipastiCardPriceBadge, { backgroundColor: colors.primary }]}>
-                    <Text style={styles.antipastiCardPriceBadgeText}>
-                      {formatPrice(orderMode === 'delivery' ? ant.deliveryprice : ant.price)}
-                    </Text>
+            {antipastiItems.map((ant) => {
+              const antId = ant?.id ?? '';
+              const antName = antId ? t(`menu.items.${antId}.name`) : t('cart.unknownItem');
+              const antPrice = orderMode === 'delivery' ? (ant?.deliveryprice ?? 0) : (ant?.price ?? 0);
+              return (
+                <TouchableOpacity
+                  key={antId || `antipasti-${Math.random()}`}
+                  style={[styles.antipastiCard, { backgroundColor: colors.surface, borderColor: colors.border }]}
+                  onPress={() => handleAntipastiPress(ant)}
+                  activeOpacity={0.85}
+                >
+                  <View style={[styles.antipastiCardImageWrap, { backgroundColor: colors.surface }]}>
+                    <MenuImage
+                      filename={ant?.image}
+                      style={styles.antipastiCardImage}
+                      resizeMode="contain"
+                      placeholderStyle={{ width: '100%', height: '100%' }}
+                      fallback={<Text style={styles.antipastiCardEmoji}>🥙</Text>}
+                    />
+                    <View style={[styles.antipastiCardPriceBadge, { backgroundColor: colors.primary }]}>
+                      <Text style={styles.antipastiCardPriceBadgeText}>
+                        {formatPrice(antPrice)}
+                      </Text>
+                    </View>
                   </View>
-                </View>
-                <Text style={[styles.antipastiCardName, { color: colors.text }]} numberOfLines={2}>
-                  {t(`menu.items.${ant.id}.name`)}
-                </Text>
-              </TouchableOpacity>
-            ))}
+                  <Text style={[styles.antipastiCardName, { color: colors.text }]} numberOfLines={2}>
+                    {antName}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
           </ScrollView>
         </View>
       )}
@@ -342,9 +347,9 @@ const styles = StyleSheet.create({
     marginHorizontal: Theme.spacing.md,
     marginTop: Theme.spacing.sm,
     borderRadius: Theme.borderRadii.lg,
-    backgroundColor: colors.surfaceElevated,
+    backgroundColor: Theme.colors.surfaceElevated,
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: Theme.colors.border,
   },
   bannerIconCircle: {
     width: 40,

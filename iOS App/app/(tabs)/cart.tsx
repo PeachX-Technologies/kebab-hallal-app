@@ -98,32 +98,32 @@ export default function CartScreen() {
     if (!isBlocked) return null;
     return (
       <View style={styles.blockedBanner}>
-        {isClosed ? (
-          <>
-            <View style={[styles.bannerIconCircle, { backgroundColor: colors.error + '18' }]}>
-              <ClockSvg color={colors.error} />
-            </View>
-            <View style={styles.bannerTextWrap}>
-              <Text style={[styles.bannerTitle, { color: colors.text }]}>{t('restaurant.closedTitle')}</Text>
-              <Text style={[styles.bannerDesc, { color: colors.textSecondary }]}>{t('restaurant.closedDesc')}</Text>
-              <Text style={[styles.bannerHours, { color: colors.textSecondary }]}>
-                {t('restaurant.lunchHours')}
-                {'\n'}
-                {t('restaurant.dinnerHours')}
-              </Text>
-            </View>
-          </>
-        ) : (
-          <>
-            <View style={[styles.bannerIconCircle, { backgroundColor: '#F97316' + '18' }]}>
-              <TruckSvg color="#F97316" />
-            </View>
-            <View style={styles.bannerTextWrap}>
-              <Text style={[styles.bannerTitle, { color: colors.text }]}>{t('delivery.unavailableTitle')}</Text>
-              <Text style={[styles.bannerDesc, { color: colors.textSecondary }]}>{t('delivery.unavailableDesc')}</Text>
-            </View>
-          </>
-        )}
+{isClosed ? (
+            <>
+              <View style={[styles.bannerIconCircle, { backgroundColor: colors.errorLight }]}>
+                <ClockSvg color={colors.error} />
+              </View>
+              <View style={styles.bannerTextWrap}>
+                <Text style={[styles.bannerTitle, { color: colors.text }]}>{t('restaurant.closedTitle')}</Text>
+                <Text style={[styles.bannerDesc, { color: colors.textSecondary }]}>{t('restaurant.closedDesc')}</Text>
+                <Text style={[styles.bannerHours, { color: colors.textSecondary }]}>
+                  {t('restaurant.lunchHours')}
+                  {'\n'}
+                  {t('restaurant.dinnerHours')}
+                </Text>
+              </View>
+            </>
+          ) : (
+            <>
+              <View style={[styles.bannerIconCircle, { backgroundColor: colors.warningLight }]}>
+                <TruckSvg color={colors.warning} />
+              </View>
+              <View style={styles.bannerTextWrap}>
+                <Text style={[styles.bannerTitle, { color: colors.text }]}>{t('delivery.unavailableTitle')}</Text>
+                <Text style={[styles.bannerDesc, { color: colors.textSecondary }]}>{t('delivery.unavailableDesc')}</Text>
+              </View>
+            </>
+          )}
       </View>
     );
   };
