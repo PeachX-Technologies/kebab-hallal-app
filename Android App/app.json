@@ -2,7 +2,7 @@
   "expo": {
     "name": "Kebab Hallal",
     "slug": "kebab-hallal-catania",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "orientation": "portrait",
     "icon": "./assets/icons/icon.png",
     "userInterfaceStyle": "light",
@@ -12,14 +12,14 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.mh.kebabhallal",
-      "buildNumber": "1.0.8",
+      "buildNumber": "1.0.9",
       "googleServicesFile": "./GoogleService-Info.plist",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
-      "versionCode": 19,
+      "versionCode": 20,
       "adaptiveIcon": {
         "foregroundImage": "./assets/icons/adaptive-icon.png",
         "backgroundColor": "#FFF8F0"

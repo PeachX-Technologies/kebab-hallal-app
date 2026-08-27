@@ -24,10 +24,11 @@ import MenuImage from '../components/menu/MenuImage';
 import PhoneField from '../components/PhoneField';
 import CheckoutOtpModal from '../components/checkout/CheckoutOtpModal';
 import { formatPrice } from '../utils/priceUtils';
-import { getDeliveryCharge, ZoneInfo } from '../utils/deliveryZones';
+import { getDeliveryCharge, ZoneInfo, detectZone } from '../utils/deliveryZones';
 import { getMinZoneCosts } from '../services/orderService';
 import { useMenu, MenuItem } from '../context/MenuContext';
 import { generateTimeSlots, TimeSlot } from '../utils/scheduledOrder';
+import { searchAddress } from '../utils/geocoding';
 import Theme from '../theme';
 
 type CheckoutStep = 'form' | 'summary';
@@ -103,8 +104,18 @@ export default function CheckoutScreen() {
   const [deliveryLocation, setDeliveryLocation] = useState<{
     latitude: number;
     longitude: number;
-  } | null>(null);
-  const [detectedZone, setDetectedZone] = useState<ZoneInfo | null>(null);
+  } | null>(() => {
+    if (user?.latitude && user?.longitude) {
+      return { latitude: user.latitude, longitude: user.longitude };
+    }
+    return null;
+  });
+  const [detectedZone, setDetectedZone] = useState<ZoneInfo | null>(() => {
+    if (user?.latitude && user?.longitude) {
+      return detectZone(user.latitude, user.longitude);
+    }
+    return null;
+  });
 
   const [name, setName] = useState(user?.name ?? '');
   const [phone, setPhone] = useState(user?.phone ?? '');
@@ -165,8 +176,30 @@ export default function CheckoutScreen() {
       setPhone(user.phone ?? '');
       setAddress(user.address ?? '');
       setHouseNumber(user.houseNumber ?? '');
+      if (user.latitude && user.longitude) {
+        setDeliveryLocation({ latitude: user.latitude, longitude: user.longitude });
+        const zone = detectZone(user.latitude, user.longitude);
+        setDetectedZone(zone);
+      }
     }
   }, [user]);
+
+  // Fallback: If user has a saved address but no latitude/longitude yet, automatically geocode it
+  useEffect(() => {
+    if (user?.address && (!user.latitude || !user.longitude) && !deliveryLocation) {
+      const fullQuery = user.houseNumber ? `${user.address} ${user.houseNumber}, Catania` : `${user.address}, Catania`;
+      searchAddress(fullQuery).then((results) => {
+        if (results.length > 0) {
+          const first = results[0];
+          const loc = { latitude: first.latitude, longitude: first.longitude };
+          setDeliveryLocation(loc);
+          const zone = detectZone(first.latitude, first.longitude);
+          setDetectedZone(zone);
+          saveProfile({ latitude: first.latitude, longitude: first.longitude });
+        }
+      }).catch(() => {});
+    }
+  }, [user?.address, user?.houseNumber, user?.latitude, user?.longitude]);
 
   useEffect(() => {
     if (nameTouched && !name.trim()) {
@@ -211,6 +244,8 @@ export default function CheckoutScreen() {
 
   const handleLocationChange = (lat: number, lng: number) => {
     setDeliveryLocation({ latitude: lat, longitude: lng });
+    const zone = detectZone(lat, lng);
+    setDetectedZone(zone);
   };
 
   const handleZoneDetected = (zone: ZoneInfo | null) => {
@@ -239,6 +274,8 @@ export default function CheckoutScreen() {
       phone: phone.trim(),
       address: address.trim(),
       houseNumber: houseNumber.trim(),
+      latitude: deliveryLocation?.latitude,
+      longitude: deliveryLocation?.longitude,
     });
     setHasSavedOnce(true);
   };

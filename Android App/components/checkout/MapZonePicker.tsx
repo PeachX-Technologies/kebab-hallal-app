@@ -102,6 +102,31 @@ export default function MapZonePicker({
     }).catch((e) => console.error('[MapZonePicker] fetchDeliveryZones error:', e));
   }, []);
 
+  // When map becomes ready or selectedLocation updates, center map on selected location
+  useEffect(() => {
+    if (mapReady && selectedLocation) {
+      mapRef.current?.animateCamera({
+        center: { latitude: selectedLocation.latitude, longitude: selectedLocation.longitude },
+        zoom: 15,
+      }, { duration: 500 });
+    }
+  }, [mapReady, selectedLocation?.latitude, selectedLocation?.longitude]);
+
+  // Synchronize zone detection whenever enabledZones load or selectedLocation changes
+  useEffect(() => {
+    if (selectedLocation) {
+      const zone = detectZone(selectedLocation.latitude, selectedLocation.longitude);
+      if (zone) {
+        const key = zone.id as keyof DeliveryZones;
+        if (!enabledZones[key]) {
+          onZoneDetected(null);
+          return;
+        }
+      }
+      onZoneDetected(zone);
+    }
+  }, [enabledZones, selectedLocation?.latitude, selectedLocation?.longitude]);
+
   useEffect(() => {
     return () => {
       if (releaseTouchTimerRef.current) {
@@ -380,7 +405,16 @@ export default function MapZonePicker({
         <MapView
           ref={mapRef}
           style={styles.map}
-          initialRegion={INITIAL_REGION}
+          initialRegion={
+            selectedLocation
+              ? {
+                  latitude: selectedLocation.latitude,
+                  longitude: selectedLocation.longitude,
+                  latitudeDelta: 0.02,
+                  longitudeDelta: 0.02,
+                }
+              : INITIAL_REGION
+          }
           onPress={handleMapPress}
           showsUserLocation={false}
           showsMyLocationButton={false}

@@ -22,6 +22,7 @@ import {
   unregisterPushNotifications,
 } from '../../services/notificationService';
 import { saveUserProfile } from '../../services/userService';
+import { searchAddress } from '../../utils/geocoding';
 import Input from '../../components/ui/Input';
 import ConfirmDialog from '../../components/ui/ConfirmDialog';
 import Theme from '../../theme';
@@ -249,7 +250,19 @@ export default function SettingsScreen() {
         } else {
           if (firebaseUser) await unregisterPushNotifications(firebaseUser.uid);
         }
-        saveProfile({ name, address, houseNumber, phone: user.phone });
+        let lat = user.latitude;
+        let lng = user.longitude;
+        if (address.trim() && (address !== origAddress.current || houseNumber !== origHouse.current || !lat)) {
+          try {
+            const query = houseNumber.trim() ? `${address.trim()} ${houseNumber.trim()}, Catania` : `${address.trim()}, Catania`;
+            const results = await searchAddress(query);
+            if (results.length > 0) {
+              lat = results[0].latitude;
+              lng = results[0].longitude;
+            }
+          } catch {}
+        }
+        saveProfile({ name, address, houseNumber, phone: user.phone, latitude: lat, longitude: lng });
       }
       origName.current = name;
       origAddress.current = address;

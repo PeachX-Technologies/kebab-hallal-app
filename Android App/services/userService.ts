@@ -8,6 +8,8 @@ export interface UserProfile {
   houseNo?: string;
   streetAddress?: string;
   city?: string;
+  latitude?: number;
+  longitude?: number;
   provider?: string;
   createdAt?: string;
 }

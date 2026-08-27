@@ -15,6 +15,8 @@ export interface User {
   address?: string;
   houseNumber?: string;
   city?: string;
+  latitude?: number;
+  longitude?: number;
 }
 
 interface FirebaseUser {
@@ -82,16 +84,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         AsyncStorage.getItem(STORAGE_KEYS.PROFILE_PHONE),
         AsyncStorage.getItem(STORAGE_KEYS.PROFILE_HOUSE),
         AsyncStorage.getItem(STORAGE_KEYS.PROFILE_CITY),
+        AsyncStorage.getItem(STORAGE_KEYS.PROFILE_LAT),
+        AsyncStorage.getItem(STORAGE_KEYS.PROFILE_LNG),
       ])
-        .then(([storedUser, address, phone, house, city]) => {
-          if (!cancelled && storedUser) {
-            const parsed = JSON.parse(storedUser) as User;
+        .then(([storedUser, address, phone, house, city, lat, lng]) => {
+          if (!cancelled && (storedUser || address || phone || lat)) {
+            const parsed = storedUser ? (JSON.parse(storedUser) as User) : ({} as User);
             setUser({
-              ...parsed,
-              address: address || parsed.address || '',
+              name: parsed.name || '',
               phone: phone || parsed.phone || '',
+              address: address || parsed.address || '',
               houseNumber: house || parsed.houseNumber || '',
               city: city || parsed.city || '',
+              latitude: lat ? parseFloat(lat) : parsed.latitude,
+              longitude: lng ? parseFloat(lng) : parsed.longitude,
             });
           }
         })
@@ -112,9 +118,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             address: profile.streetAddress || '',
             houseNumber: profile.houseNo || '',
             city: profile.city || '',
+            latitude: profile.latitude,
+            longitude: profile.longitude,
           };
           setUser(merged);
           AsyncStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(merged)).catch(() => {});
+          if (profile.latitude !== undefined) {
+            AsyncStorage.setItem(STORAGE_KEYS.PROFILE_LAT, String(profile.latitude)).catch(() => {});
+          }
+          if (profile.longitude !== undefined) {
+            AsyncStorage.setItem(STORAGE_KEYS.PROFILE_LNG, String(profile.longitude)).catch(() => {});
+          }
           return;
         }
         return Promise.all([
@@ -123,15 +137,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           AsyncStorage.getItem(STORAGE_KEYS.PROFILE_PHONE),
           AsyncStorage.getItem(STORAGE_KEYS.PROFILE_HOUSE),
           AsyncStorage.getItem(STORAGE_KEYS.PROFILE_CITY),
-        ]).then(([storedUser, address, phone, house, city]) => {
-          if (!cancelled && storedUser) {
-            const parsed = JSON.parse(storedUser) as User;
+          AsyncStorage.getItem(STORAGE_KEYS.PROFILE_LAT),
+          AsyncStorage.getItem(STORAGE_KEYS.PROFILE_LNG),
+        ]).then(([storedUser, address, phone, house, city, lat, lng]) => {
+          if (!cancelled && (storedUser || address || phone || lat)) {
+            const parsed = storedUser ? (JSON.parse(storedUser) as User) : ({} as User);
             setUser({
-              ...parsed,
-              address: address || parsed.address || '',
+              name: parsed.name || '',
               phone: phone || parsed.phone || '',
+              address: address || parsed.address || '',
               houseNumber: house || parsed.houseNumber || '',
               city: city || parsed.city || '',
+              latitude: lat ? parseFloat(lat) : parsed.latitude,
+              longitude: lng ? parseFloat(lng) : parsed.longitude,
             });
           }
         });
@@ -178,14 +196,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         AsyncStorage.removeItem(STORAGE_KEYS.PROFILE_PHONE),
         AsyncStorage.removeItem(STORAGE_KEYS.PROFILE_HOUSE),
         AsyncStorage.removeItem(STORAGE_KEYS.PROFILE_CITY),
+        AsyncStorage.removeItem(STORAGE_KEYS.PROFILE_LAT),
+        AsyncStorage.removeItem(STORAGE_KEYS.PROFILE_LNG),
       ]);
     } catch {}
   }, []);
 
   const saveProfile = useCallback(async (profile: Partial<User>) => {
     setUser((prev) => {
-      if (!prev) return prev;
-      const updated = { ...prev, ...profile };
+      const current = prev || { name: '', phone: '' };
+      const updated = { ...current, ...profile };
       AsyncStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(updated)).catch(() => {});
       if (profile.address !== undefined)
         AsyncStorage.setItem(STORAGE_KEYS.PROFILE_ADDRESS, profile.address).catch(() => {});
@@ -195,6 +215,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         AsyncStorage.setItem(STORAGE_KEYS.PROFILE_HOUSE, profile.houseNumber).catch(() => {});
       if (profile.city !== undefined)
         AsyncStorage.setItem(STORAGE_KEYS.PROFILE_CITY, profile.city).catch(() => {});
+      if (profile.latitude !== undefined)
+        AsyncStorage.setItem(STORAGE_KEYS.PROFILE_LAT, String(profile.latitude)).catch(() => {});
+      if (profile.longitude !== undefined)
+        AsyncStorage.setItem(STORAGE_KEYS.PROFILE_LNG, String(profile.longitude)).catch(() => {});
       if (firebaseUser) {
         saveUserProfile(firebaseUser.uid, {
           name: updated.name,
@@ -202,6 +226,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           streetAddress: updated.address,
           houseNo: updated.houseNumber,
           city: updated.city,
+          latitude: updated.latitude,
+          longitude: updated.longitude,
         }).catch(() => {});
       }
       return updated;
