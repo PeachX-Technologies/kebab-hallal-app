@@ -104,10 +104,10 @@
     "emptySubtitle": "Aggiungi qualcosa dal menu",
     "browseMenu": "Sfoglia il menu",
     "subtotal": "Subtotale",
-"proceedToCheckout": "Procedi al checkout",
-      "remove": "Rimuovi",
-      "unknownItem": "Articolo sconosciuto",
-      "itemCount": "{{count}} articolo",
+    "proceedToCheckout": "Procedi al checkout",
+    "remove": "Rimuovi",
+    "unknownItem": "Articolo sconosciuto",
+    "itemCount": "{{count}} articolo",
     "itemCount_plural": "{{count}} articoli",
     "deliveryChargesNote": "Le spese di Consegna a domicilio verranno calcolate in base alla tua posizione",
     "deliveryFee": "Spese di Consegna",
@@ -140,8 +140,8 @@
     "yourNamePlaceholder": "Il tuo nome",
     "yourPhone": "Telefono",
     "yourPhonePlaceholder": "+39 333 1234567",
-    "houseNumber": "Civico / Piano / Citofono",
-    "houseNumberPlaceholder": "es. 12A, 3° piano",
+    "houseNumber": "Citofono / Piano / Scala",
+    "houseNumberPlaceholder": "es. Rossi / 3,P / SCALA A",
     "cityPlaceholder": "Catania",
     "minimumOrder": "Ordine Min.",
     "estimatedDelivery": "Consegna stimata",
@@ -252,7 +252,7 @@
     "preparing": "In Preparazione",
     "delivering": "In Consegna",
     "delivered": "Consegnato",
-    "inProgress": "In corso...",
+    "inProgress": "Ordine Confermato ✅",
     "completed": "Completato",
     "deliveryTitle": "Info Consegna",
     "scheduledFor": "Programmato per",
@@ -291,8 +291,8 @@
     "namePlaceholder": "Il tuo nome",
     "deliveryAddress": "Indirizzo di Consegna a domicilio",
     "deliveryAddressPlaceholder": "Il tuo indirizzo",
-    "houseNumber": "Civico / Piano / Citofono",
-    "houseNumberPlaceholder": "es. 12A, 3° piano",
+    "houseNumber": "Citofono / Piano / Scala",
+    "houseNumberPlaceholder": "es. Rossi / 3,P / SCALA A",
     "notifications": "Notifiche push",
     "notificationsDesc": "Ricevi aggiornamenti sugli ordini",
     "orderMode": "Modalità ordine",
@@ -399,67 +399,238 @@
   },
   "menu": {
     "categories": {
-      "menu-completo": { "name": "Menù Completo" },
-      "kebab": { "name": "Kebab" },
-      "vegetariano": { "name": "Vegetariano" },
-      "burger": { "name": "Burger" },
-      "antipasti": { "name": "Antipasti" },
-      "bevande": { "name": "Bevande" }
+      "menu-completo": {
+        "name": "Menù Completo"
+      },
+      "kebab": {
+        "name": "Kebab"
+      },
+      "vegetariano": {
+        "name": "Vegetariano"
+      },
+      "burger": {
+        "name": "Burger"
+      },
+      "antipasti": {
+        "name": "Antipasti"
+      },
+      "bevande": {
+        "name": "Bevande"
+      }
     },
     "items": {
-      "MC01": { "name": "Menù Completo", "description": "kebab , vaschetta patatine, e 1 lattina 33cl a scelta" },
-      "MC04": { "name": "Menù Panino Kebab", "description": "Panino kebab, vaschetta patatine e lattina da 33cl a scelta" },
-      "MC05": { "name": "Menù Piatto Kebab", "description": "Piatto kebab, vaschetta patatine e 1 lattina 33cl a scelta" },
-      "MC06": { "name": "Menù Falafel", "description": "(panino, piadina o piatto) vaschetta di patatine, lattina a scelta" },
-      "MC07": { "name": "Menu Falafel Panino", "description": "1 panino falafel , bibita , vaschetta di patatine" },
-      "MC08": { "name": "Menù Chicken Burger", "description": "chicken burger, vaschetta patatine e lattina a scelta" },
-      "KB01": { "name": "Piadina Kebab", "description": "Piadina Kebab condimenti a scelta" },
-      "KB02": { "name": "Kebab Doppia Carne", "description": "Piadina kebab con doppia carne condimenti a scelta" },
-      "KB07": { "name": "Piatto Kebab", "description": "Kebab nel piatto condimenti a scelta" },
-      "KB09": { "name": "Panino Kebab", "description": "Pane arabo con condimenti a scelta" },
-      "VG01": { "name": "Piadina Falafel", "description": "Piadina con falafel e condimenti a scelta. 100% vegetariano" },
-      "VG04": { "name": "Piatto Falafel", "description": "PIATTO FALAFEL CON CONDIMENTI A SCELTA. 100% VEGETARIANO" },
-      "VG05": { "name": "Panino Falafel", "description": "PANE ARABO CON FALAFEL. CONDIMENTI A SCELTA. 100% VEGETARIANO" },
-      "BU01": { "name": "Chicken burger", "description": "Burger di pollo , condimenti a scelta" },
-      "BU02": { "name": "FISH BURGER", "description": "burger di pesce merluzzo, condimenti a scelta" },
-      "AN01": { "name": "Vaschetta di Patatine", "description": "salse a scelta" },
-      "AN02": { "name": "VAS. Patatine Twister", "description": "salse a scelta" },
-      "AN03": { "name": "VAS. Patatine Crisscut", "description": "salse a scelta" },
-      "AN04": { "name": "Alette Di Pollo", "description": "5 pz., salse a scelta" },
-      "AN05": { "name": "Chicken sticks", "description": "10 pz. Bastoncini di pollo , salse a scelta" },
-      "AN06": { "name": "Vaschetta Falafel", "description": "7 pz. , salse a scelta" },
-      "AN07": { "name": "Crispy Chicken", "description": "piadina con filetini di pollo e condimenti a scelta" },
-      "AN08": { "name": "Chicken Nuggets", "description": "12 pz. Crocchette di pollo , salse a scelta" },
-      "AN09": { "name": "Fish'N'Chips", "description": "9 pz. Nuggets de merluzzo + patatine fritte , salse a scelta" },
-      "AN10": { "name": "Anelli di Cipolla", "description": "12 pz. , salse a scelta" },
-      "AN11": { "name": "Samosa", "description": "1pz. - pollo , curry , sale , patatine fritte , cipolla , olio , farina tipo 00 , garam masala" },
-      "AN12": { "name": "Involtini primavera", "description": "1pz. - sfoglia di carta di riso , verza , curry , sale" },
-      "AN13": { "name": "Mozzarella Sticks", "description": "7 pz. Bastoncini di mozzarella rivestiti da una croccante panatura , salse a scelta" },
-      "AN14": { "name": "Vaschetta Kebab", "description": "CARNE KEBAB , salse a scelta" },
-      "AN15": { "name": "Chicken Pepitos 10pz.", "description": "10 Deliziosi bocconcini di pollo avvolti da una croccante panatura piacevolmente speziata , salse a scelta" },
-      "AN16": { "name": "Piadina Alla Nutella", "description": "piadina con nutella Ferrero" },
-      "AN17": { "name": "Baklava", "description": "1pz Baklava è un dessert ricco di miele e frutta secca originario dell'odierna Turchia" },
-      "AN18": { "name": "Donut", "description": "1pz." },
-      "BV19": { "name": "Acqua Naturale 500ML", "description": "Naturale" },
-      "BV20": { "name": "Acqua Frizzante 500ML", "description": "Frizzante" },
-      "BV08": { "name": "Coca Cola 33cl", "description": "Gusto originale Coca-Cola. Per gustarla al meglio, versala in un bicchiere con 2-3 cubetti di ghiaccio e una fettina di limone. Ideale da stappare in buona compagnia, durante i pasti o davanti ad un film o ad una partita." },
-      "BV10": { "name": "Coca Cola Zero 33cl", "description": "Bevanda senza zuccheri aggiunti, dall'inconfondibile gusto Coca-Cola. Per gustarla al meglio, versala in un bicchiere con ghiaccio e una fettina di limone. Ideale da stappare in buona compagnia, durante i pasti o davanti ad un film o ad una partita." },
-      "BV15": { "name": "Pepsi 33cl", "description": "" },
-      "BV16": { "name": "Pepsi Twist 33cl", "description": "" },
-      "BV11": { "name": "Sprite 33cl", "description": "Bevanda dal gusto deciso e fresco di limone e lime, con aromi naturali, da servire ghiacciata per un'esperienza di giusto ottimale e più intensa. Con confezione riciclabile." },
-      "BV14": { "name": "7 Up 33cl", "description": "" },
-      "BV09": { "name": "Fanta 33cl", "description": "Bevanda al gusto di arancia, da servire ghiacciata per dissetarti con gusto. Si abbina bene con tutti I tuoi snack, con confezione riciclabile." },
-      "BV07": { "name": "Coca Cola 450ML", "description": "Gusto originale Coca-Cola. Per gustarla al meglio, versala in un bicchiere con 2-3 cubetti di ghiaccio e una fettina di limone. Ideale da stappare in buona compagnia, durante i pasti o davanti ad un film o ad una partita." },
-      "BV12": { "name": "Lemon Soda 33cl", "description": "" },
-      "BV13": { "name": "Chinotto 33cl", "description": "" },
-      "BV17": { "name": "The Pesca 33cl", "description": "" },
-      "BV18": { "name": "The Limone 33cl", "description": "" },
-      "BV01": { "name": "Monster Energy 500ml", "description": "Monster Energy, dal gusto gradevole e intenso, è la combinazione di ingredienti giusti nelle giuste proporzioni" },
-      "BV04": { "name": "Monster Energy Zero Sugar 500ml", "description": "La Monster Energy Zero sugar ha la stessa carica energetica della classica Monster, con un gusto più leggero e senza calorie" },
-      "BV05": { "name": "Monster Energy Nitro 500ml", "description": "Monster Energy Nitro Super Dry lattina da 500 ml, bevanda energetica dal gusto eccezionale con miscela energetica e 160 mg di caffeina." },
-      "BV03": { "name": "Monster Energy Ultra 500ml", "description": "Il nostro team ci ha chiesto una nuova Monster... Un po' meno dolce, con un gusto più leggero e senza calorie, ma con la stessa carica energetica Monster di sempre. Di sicuro, il bianco è il nuovo nero. Così abbiamo creato... Monster Energy Ultra." },
-      "BV02": { "name": "Monster Mango Loco 500ml", "description": "Mango Loco, ispirato dal \"Dìa de Los Muertos\", è un mix paradisiaco di succhi esotici" },
-      "BV06": { "name": "Red Bull Energy Drink, 250ml", "description": "Red Bull è una bevanda energetica analcolica di colore ambrato brillante, con taurina e caffeina, è gassata ed ha un gusto leggermente dolce fruttato tendente alla fragola" }
+      "MC01": {
+        "name": "Menù Completo",
+        "description": "kebab , vaschetta patatine, e 1 lattina 33cl a scelta"
+      },
+      "MC04": {
+        "name": "Menù Panino Kebab",
+        "description": "Panino kebab, vaschetta patatine e lattina da 33cl a scelta"
+      },
+      "MC05": {
+        "name": "Menù Piatto Kebab",
+        "description": "Piatto kebab, vaschetta patatine e 1 lattina 33cl a scelta"
+      },
+      "MC06": {
+        "name": "Menù Falafel",
+        "description": "(panino, piadina o piatto) vaschetta di patatine, lattina a scelta"
+      },
+      "MC07": {
+        "name": "Menu Falafel Panino",
+        "description": "1 panino falafel , bibita , vaschetta di patatine"
+      },
+      "MC08": {
+        "name": "Menù Chicken Burger",
+        "description": "chicken burger, vaschetta patatine e lattina a scelta"
+      },
+      "KB01": {
+        "name": "Piadina Kebab",
+        "description": "Piadina Kebab condimenti a scelta"
+      },
+      "KB02": {
+        "name": "Kebab Doppia Carne",
+        "description": "Piadina kebab con doppia carne condimenti a scelta"
+      },
+      "KB07": {
+        "name": "Piatto Kebab",
+        "description": "Kebab nel piatto condimenti a scelta"
+      },
+      "KB09": {
+        "name": "Panino Kebab",
+        "description": "Pane arabo con condimenti a scelta"
+      },
+      "VG01": {
+        "name": "Piadina Falafel",
+        "description": "Piadina con falafel e condimenti a scelta. 100% vegetariano"
+      },
+      "VG04": {
+        "name": "Piatto Falafel",
+        "description": "PIATTO FALAFEL CON CONDIMENTI A SCELTA. 100% VEGETARIANO"
+      },
+      "VG05": {
+        "name": "Panino Falafel",
+        "description": "PANE ARABO CON FALAFEL. CONDIMENTI A SCELTA. 100% VEGETARIANO"
+      },
+      "BU01": {
+        "name": "Chicken burger",
+        "description": "Burger di pollo , condimenti a scelta"
+      },
+      "BU02": {
+        "name": "FISH BURGER",
+        "description": "burger di pesce merluzzo, condimenti a scelta"
+      },
+      "AN01": {
+        "name": "Vaschetta di Patatine",
+        "description": "salse a scelta"
+      },
+      "AN02": {
+        "name": "VAS. Patatine Twister",
+        "description": "salse a scelta"
+      },
+      "AN03": {
+        "name": "VAS. Patatine Crisscut",
+        "description": "salse a scelta"
+      },
+      "AN04": {
+        "name": "Alette Di Pollo",
+        "description": "5 pz., salse a scelta"
+      },
+      "AN05": {
+        "name": "Chicken sticks",
+        "description": "10 pz. Bastoncini di pollo , salse a scelta"
+      },
+      "AN06": {
+        "name": "Vaschetta Falafel",
+        "description": "7 pz. , salse a scelta"
+      },
+      "AN07": {
+        "name": "Crispy Chicken",
+        "description": "piadina con filetini di pollo e condimenti a scelta"
+      },
+      "AN08": {
+        "name": "Chicken Nuggets",
+        "description": "12 pz. Crocchette di pollo , salse a scelta"
+      },
+      "AN09": {
+        "name": "Fish'N'Chips",
+        "description": "9 pz. Nuggets de merluzzo + patatine fritte , salse a scelta"
+      },
+      "AN10": {
+        "name": "Anelli di Cipolla",
+        "description": "12 pz. , salse a scelta"
+      },
+      "AN11": {
+        "name": "Samosa",
+        "description": "1pz. - pollo , curry , sale , patatine fritte , cipolla , olio , farina tipo 00 , garam masala"
+      },
+      "AN12": {
+        "name": "Involtini primavera",
+        "description": "1pz. - sfoglia di carta di riso , verza , curry , sale"
+      },
+      "AN13": {
+        "name": "Mozzarella Sticks",
+        "description": "7 pz. Bastoncini di mozzarella rivestiti da una croccante panatura , salse a scelta"
+      },
+      "AN14": {
+        "name": "Vaschetta Kebab",
+        "description": "CARNE KEBAB , salse a scelta"
+      },
+      "AN15": {
+        "name": "Chicken Pepitos 10pz.",
+        "description": "10 Deliziosi bocconcini di pollo avvolti da una croccante panatura piacevolmente speziata , salse a scelta"
+      },
+      "AN16": {
+        "name": "Piadina Alla Nutella",
+        "description": "piadina con nutella Ferrero"
+      },
+      "AN17": {
+        "name": "Baklava",
+        "description": "1pz Baklava è un dessert ricco di miele e frutta secca originario dell'odierna Turchia"
+      },
+      "AN18": {
+        "name": "Donut",
+        "description": "1pz."
+      },
+      "BV19": {
+        "name": "Acqua Naturale 500ML",
+        "description": "Naturale"
+      },
+      "BV20": {
+        "name": "Acqua Frizzante 500ML",
+        "description": "Frizzante"
+      },
+      "BV08": {
+        "name": "Coca Cola 33cl",
+        "description": "Gusto originale Coca-Cola. Per gustarla al meglio, versala in un bicchiere con 2-3 cubetti di ghiaccio e una fettina di limone. Ideale da stappare in buona compagnia, durante i pasti o davanti ad un film o ad una partita."
+      },
+      "BV10": {
+        "name": "Coca Cola Zero 33cl",
+        "description": "Bevanda senza zuccheri aggiunti, dall'inconfondibile gusto Coca-Cola. Per gustarla al meglio, versala in un bicchiere con ghiaccio e una fettina di limone. Ideale da stappare in buona compagnia, durante i pasti o davanti ad un film o ad una partita."
+      },
+      "BV15": {
+        "name": "Pepsi 33cl",
+        "description": ""
+      },
+      "BV16": {
+        "name": "Pepsi Twist 33cl",
+        "description": ""
+      },
+      "BV11": {
+        "name": "Sprite 33cl",
+        "description": "Bevanda dal gusto deciso e fresco di limone e lime, con aromi naturali, da servire ghiacciata per un'esperienza di giusto ottimale e più intensa. Con confezione riciclabile."
+      },
+      "BV14": {
+        "name": "7 Up 33cl",
+        "description": ""
+      },
+      "BV09": {
+        "name": "Fanta 33cl",
+        "description": "Bevanda al gusto di arancia, da servire ghiacciata per dissetarti con gusto. Si abbina bene con tutti I tuoi snack, con confezione riciclabile."
+      },
+      "BV07": {
+        "name": "Coca Cola 450ML",
+        "description": "Gusto originale Coca-Cola. Per gustarla al meglio, versala in un bicchiere con 2-3 cubetti di ghiaccio e una fettina di limone. Ideale da stappare in buona compagnia, durante i pasti o davanti ad un film o ad una partita."
+      },
+      "BV12": {
+        "name": "Lemon Soda 33cl",
+        "description": ""
+      },
+      "BV13": {
+        "name": "Chinotto 33cl",
+        "description": ""
+      },
+      "BV17": {
+        "name": "The Pesca 33cl",
+        "description": ""
+      },
+      "BV18": {
+        "name": "The Limone 33cl",
+        "description": ""
+      },
+      "BV01": {
+        "name": "Monster Energy 500ml",
+        "description": "Monster Energy, dal gusto gradevole e intenso, è la combinazione di ingredienti giusti nelle giuste proporzioni"
+      },
+      "BV04": {
+        "name": "Monster Energy Zero Sugar 500ml",
+        "description": "La Monster Energy Zero sugar ha la stessa carica energetica della classica Monster, con un gusto più leggero e senza calorie"
+      },
+      "BV05": {
+        "name": "Monster Energy Nitro 500ml",
+        "description": "Monster Energy Nitro Super Dry lattina da 500 ml, bevanda energetica dal gusto eccezionale con miscela energetica e 160 mg di caffeina."
+      },
+      "BV03": {
+        "name": "Monster Energy Ultra 500ml",
+        "description": "Il nostro team ci ha chiesto una nuova Monster... Un po' meno dolce, con un gusto più leggero e senza calorie, ma con la stessa carica energetica Monster di sempre. Di sicuro, il bianco è il nuovo nero. Così abbiamo creato... Monster Energy Ultra."
+      },
+      "BV02": {
+        "name": "Monster Mango Loco 500ml",
+        "description": "Mango Loco, ispirato dal \"Dìa de Los Muertos\", è un mix paradisiaco di succhi esotici"
+      },
+      "BV06": {
+        "name": "Red Bull Energy Drink, 250ml",
+        "description": "Red Bull è una bevanda energetica analcolica di colore ambrato brillante, con taurina e caffeina, è gassata ed ha un gusto leggermente dolce fruttato tendente alla fragola"
+      }
     },
     "questions": {
       "Q15": {
