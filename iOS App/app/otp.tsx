@@ -78,11 +78,13 @@ export default function OtpScreen() {
     sendingRef.current = true;
     setIsSendingOtp(true);
     setError('');
+    setResendCooldown(RESEND_COOLDOWN_SECONDS);
 
     if (!auth) {
       setError(t('auth.otp.sendError'));
       setIsSendingOtp(false);
       sendingRef.current = false;
+      setResendCooldown(0);
       return;
     }
 
@@ -90,7 +92,6 @@ export default function OtpScreen() {
       const result = await auth().signInWithPhoneNumber(phoneRef.current);
       setConfirmationResult(result);
       sentRef.current = true;
-      setResendCooldown(RESEND_COOLDOWN_SECONDS);
     } catch (e: any) {
       console.error('[sendOtp] code:', e?.code, '| message:', e?.message);
       sentRef.current = false;
@@ -152,22 +153,22 @@ export default function OtpScreen() {
 
   useEffect(() => {
     if (resendCooldown <= 0) {
-      if (cooldownRef.current) clearInterval(cooldownRef.current);
+      if (cooldownRef.current) {
+        clearInterval(cooldownRef.current);
+        cooldownRef.current = null;
+      }
       return;
     }
     cooldownRef.current = setInterval(() => {
-      setResendCooldown((prev) => {
-        if (prev <= 1) {
-          if (cooldownRef.current) clearInterval(cooldownRef.current);
-          return 0;
-        }
-        return prev - 1;
-      });
+      setResendCooldown((prev) => (prev <= 1 ? 0 : prev - 1));
     }, 1000);
     return () => {
-      if (cooldownRef.current) clearInterval(cooldownRef.current);
+      if (cooldownRef.current) {
+        clearInterval(cooldownRef.current);
+        cooldownRef.current = null;
+      }
     };
-  }, [resendCooldown]);
+  }, [resendCooldown > 0]);
 
   useEffect(() => {
     if (otp.length === OTP_LENGTH && !error && !isVerifying && confirmationResult) {
