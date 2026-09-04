@@ -255,9 +255,7 @@ export default function CheckoutScreen() {
   const handleAddressSelected = (details: { address: string; houseNumber?: string; city?: string }) => {
     setAddress(details.address);
     setAddressTouched(true);
-    if (details.houseNumber) {
-      setHouseNumber(details.houseNumber);
-    }
+    // Do NOT auto-fill houseNumber (Citofono/Piano/Scala) — the user must enter it manually
   };
 
   const handleMapTouchActive = useCallback((active: boolean) => {
