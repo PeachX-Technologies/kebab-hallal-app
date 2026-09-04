@@ -68,6 +68,8 @@ export default function MapZonePicker({
   const [searchResults, setSearchResults] = useState<GeocodingResult[]>([]);
   const [searching, setSearching] = useState(false);
   const [showResults, setShowResults] = useState(false);
+  // Suppresses the debounced search when query is set programmatically (after selecting a suggestion)
+  const suppressSearchRef = useRef(false);
 
   useEffect(() => {
     console.log('[MapZonePicker] mount effect');
@@ -144,6 +146,12 @@ export default function MapZonePicker({
       clearTimeout(searchTimerRef.current);
     }
 
+    // If query was set programmatically (after selecting a suggestion), skip the search
+    if (suppressSearchRef.current) {
+      suppressSearchRef.current = false;
+      return;
+    }
+
     const q = searchQuery.trim();
     if (q.length < 3) {
       setSearchResults([]);
@@ -212,7 +220,7 @@ export default function MapZonePicker({
         if (result) {
           onAddressSelected({
             address: result.address || result.placeName || '',
-            houseNumber: result.houseNumber,
+            // Never pass houseNumber — user must fill Citofono/Piano/Scala manually
             city: result.city || 'Catania',
           });
         }
@@ -274,15 +282,20 @@ export default function MapZonePicker({
     if (result) {
       onAddressSelected({
         address: result.address || result.placeName || '',
-        houseNumber: result.houseNumber,
+        // Never pass houseNumber — user must fill Citofono/Piano/Scala manually
         city: result.city || 'Catania',
       });
     }
   };
 
   const handleSearchSelect = (result: GeocodingResult) => {
-    setSearchQuery(result.placeName.split(',')[0] || result.placeName);
+    // Use a flag to suppress the debounced search triggered by setSearchQuery
+    const displayText = result.placeName.split(',')[0] || result.placeName;
     setShowResults(false);
+    setSearchResults([]);
+    // Suppress the search effect so typing the display text doesn't re-trigger suggestions
+    suppressSearchRef.current = true;
+    setSearchQuery(displayText);
     selectLocation(result.latitude, result.longitude);
     mapRef.current?.animateCamera({
       center: { latitude: result.latitude, longitude: result.longitude },
@@ -291,7 +304,8 @@ export default function MapZonePicker({
     if (onAddressSelected) {
       onAddressSelected({
         address: result.address || result.placeName || '',
-        houseNumber: result.houseNumber,
+        // Never auto-fill houseNumber from search — user must enter it manually
+        houseNumber: undefined,
         city: result.city || 'Catania',
       });
     }
