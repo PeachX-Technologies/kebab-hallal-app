@@ -10,3 +10,5 @@ expo-env.d.ts
 /ios
 *.log
 .DS_Store
+/ios App/node_modules
+/ios App/node_modules

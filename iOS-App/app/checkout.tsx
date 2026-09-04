@@ -460,137 +460,144 @@ export default function CheckoutScreen() {
   if (step === 'summary') {
     return (
       <View style={styles.container}>
-        <View style={[styles.header, { paddingTop: insets.top + Theme.spacing.sm }]}>
-          <TouchableOpacity
-            onPress={() => setStep('form')}
-            style={styles.backBtn}
-            accessibilityLabel={t('common.back')}
-          >
-            <Text style={styles.backText}>{'<'}</Text>
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>{t('checkout.orderSummary')}</Text>
-          <View style={styles.backBtn} />
-        </View>
-
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
+        <KeyboardAvoidingView
+          style={styles.flex}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          keyboardVerticalOffset={0}
         >
-          <View style={[styles.contentInner, { maxWidth: contentMaxWidth }]}>
-            {renderStepIndicator()}
-            {renderModeToggle()}
-
-            <SectionCard
-              icon="receipt-outline"
-              title={t('checkout.orderSummary')}
-              trailing={
-                <View style={styles.countBadge}>
-                  <Text style={styles.countBadgeText}>{itemCount}</Text>
-                </View>
-              }
+          <View style={[styles.header, { paddingTop: insets.top + Theme.spacing.sm }]}>
+            <TouchableOpacity
+              onPress={() => setStep('form')}
+              style={styles.backBtn}
+              accessibilityLabel={t('common.back')}
             >
-              {items.map((item, i) => renderOrderItem(item, i === items.length - 1))}
-
-              <View style={styles.totalsBlock}>
-                <View style={styles.totalRow}>
-                  <Text style={styles.totalLabel}>{t('checkout.subtotal')}</Text>
-                  <Text style={styles.totalValue}>{formatPrice(subtotal)}</Text>
-                </View>
-                {isDelivery && (
-                  <View style={styles.totalRow}>
-                    <Text style={styles.totalLabel}>{t('checkout.deliveryFee')}</Text>
-                    <Text style={styles.totalValue}>{formatPrice(deliveryFee)}</Text>
-                  </View>
-                )}
-                {isDelivery && minOrderAmount > 0 && (
-                  <View style={styles.totalRow}>
-                    <Text style={[styles.totalLabel, !(subtotal >= minOrderAmount) && { color: Theme.colors.error }]}>
-                      {t('checkout.minimumOrder')}
-                    </Text>
-                    <Text style={[styles.totalValue, !(subtotal >= minOrderAmount) && { color: Theme.colors.error }]}>
-                      {formatPrice(minOrderAmount)}
-                    </Text>
-                  </View>
-                )}
-                <View style={styles.totalDivider} />
-                <View style={styles.totalRow}>
-                  <Text style={styles.grandTotalLabel}>{t('checkout.total')}</Text>
-                  <Text style={styles.grandTotalValue}>{formatPrice(total)}</Text>
-                </View>
-              </View>
-            </SectionCard>
-
-            {isDelivery && (
-              <SectionCard icon="location-outline" title={t('checkout.deliveryAddress')}>
-                <Text style={styles.plainValue}>
-                  {address}
-                  {houseNumber ? `, ${houseNumber}` : ''}
-                </Text>
-                {detectedZone && (
-                  <View style={[styles.statusBanner, styles.statusBannerSuccess]}>
-                    <Ionicons name="checkmark-circle" size={18} color={Theme.colors.success} />
-                    <Text style={styles.statusBannerTextSuccess}>
-                      {t('checkout.zoneDetected', { zone: detectedZone.name })} · {formatPrice(deliveryFee)}
-                    </Text>
-                  </View>
-                )}
-              </SectionCard>
-            )}
-
-            {/* ETA Card */}
-            {isDelivery && !scheduledEnabled && (
-            <View style={styles.etaCard}>
-              <View style={styles.etaRow}>
-                <View style={styles.etaIconWrap}>
-                  <Ionicons name="time-outline" size={20} color={Theme.colors.primary} />
-                </View>
-                <View style={styles.etaTextWrap}>
-                  <Text style={styles.etaLabel}>{t('orderTracker.estimatedDelivery')}</Text>
-                  <Text style={styles.etaValue}>{t('orderTracker.estimatedTimeValue')}</Text>
-                </View>
-              </View>
-            </View>
-            )}
-
-            <SectionCard icon="person-outline" title={t('checkout.yourDetails')}>
-              <View style={styles.detailRow}>
-                <Ionicons name="person-circle-outline" size={18} color={Theme.colors.textSecondary} />
-                <View style={styles.detailTextWrap}>
-                  <Text style={styles.detailLabel}>{t('checkout.yourName')}</Text>
-                  <Text style={styles.detailValue}>{name}</Text>
-                </View>
-              </View>
-              <View style={styles.detailDivider} />
-              <View style={styles.detailRow}>
-                <Ionicons name="call-outline" size={18} color={Theme.colors.textSecondary} />
-                <View style={styles.detailTextWrap}>
-                  <Text style={styles.detailLabel}>{t('checkout.yourPhone')}</Text>
-                  <Text style={styles.detailValue}>{phone}</Text>
-                </View>
-              </View>
-            </SectionCard>
-
-            {deliveryNotes ? (
-              <SectionCard icon="document-text-outline" title={t('checkout.deliveryNotes')}>
-                <Text style={styles.plainValue}>{deliveryNotes}</Text>
-              </SectionCard>
-            ) : null}
+              <Text style={styles.backText}>{'<'}</Text>
+            </TouchableOpacity>
+            <Text style={styles.headerTitle}>{t('checkout.orderSummary')}</Text>
+            <View style={styles.backBtn} />
           </View>
-        </ScrollView>
 
-        <View style={[styles.footer, { paddingBottom: Theme.spacing.md + insets.bottom }]}>
-          <Button
-            title={t('checkout.confirmAndPay')}
-            onPress={handleGoToPayment}
-            accessibilityLabel={t('checkout.confirmAndPay')}
-          />
-          <TouchableOpacity
-            style={styles.editButton}
-            onPress={() => setStep('form')}
+          <ScrollView
+            contentContainerStyle={styles.scrollContent}
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="handled"
           >
-            <Text style={styles.editButtonText}>{t('common.back')}</Text>
-          </TouchableOpacity>
-        </View>
+            <View style={[styles.contentInner, { maxWidth: contentMaxWidth }]}>
+              {renderStepIndicator()}
+              {renderModeToggle()}
+
+              <SectionCard
+                icon="receipt-outline"
+                title={t('checkout.orderSummary')}
+                trailing={
+                  <View style={styles.countBadge}>
+                    <Text style={styles.countBadgeText}>{itemCount}</Text>
+                  </View>
+                }
+              >
+                {items.map((item, i) => renderOrderItem(item, i === items.length - 1))}
+
+                <View style={styles.totalsBlock}>
+                  <View style={styles.totalRow}>
+                    <Text style={styles.totalLabel}>{t('checkout.subtotal')}</Text>
+                    <Text style={styles.totalValue}>{formatPrice(subtotal)}</Text>
+                  </View>
+                  {isDelivery && (
+                    <View style={styles.totalRow}>
+                      <Text style={styles.totalLabel}>{t('checkout.deliveryFee')}</Text>
+                      <Text style={styles.totalValue}>{formatPrice(deliveryFee)}</Text>
+                    </View>
+                  )}
+                  {isDelivery && minOrderAmount > 0 && (
+                    <View style={styles.totalRow}>
+                      <Text style={[styles.totalLabel, !(subtotal >= minOrderAmount) && { color: Theme.colors.error }]}>
+                        {t('checkout.minimumOrder')}
+                      </Text>
+                      <Text style={[styles.totalValue, !(subtotal >= minOrderAmount) && { color: Theme.colors.error }]}>
+                        {formatPrice(minOrderAmount)}
+                      </Text>
+                    </View>
+                  )}
+                  <View style={styles.totalDivider} />
+                  <View style={styles.totalRow}>
+                    <Text style={styles.grandTotalLabel}>{t('checkout.total')}</Text>
+                    <Text style={styles.grandTotalValue}>{formatPrice(total)}</Text>
+                  </View>
+                </View>
+              </SectionCard>
+
+              {isDelivery && (
+                <SectionCard icon="location-outline" title={t('checkout.deliveryAddress')}>
+                  <Text style={styles.plainValue}>
+                    {address}
+                    {houseNumber ? `, ${houseNumber}` : ''}
+                  </Text>
+                  {detectedZone && (
+                    <View style={[styles.statusBanner, styles.statusBannerSuccess]}>
+                      <Ionicons name="checkmark-circle" size={18} color={Theme.colors.success} />
+                      <Text style={styles.statusBannerTextSuccess}>
+                        {t('checkout.zoneDetected', { zone: detectedZone.name })} · {formatPrice(deliveryFee)}
+                      </Text>
+                    </View>
+                  )}
+                </SectionCard>
+              )}
+
+              {/* ETA Card */}
+              {isDelivery && !scheduledEnabled && (
+              <View style={styles.etaCard}>
+                <View style={styles.etaRow}>
+                  <View style={styles.etaIconWrap}>
+                    <Ionicons name="time-outline" size={20} color={Theme.colors.primary} />
+                  </View>
+                  <View style={styles.etaTextWrap}>
+                    <Text style={styles.etaLabel}>{t('orderTracker.estimatedDelivery')}</Text>
+                    <Text style={styles.etaValue}>{t('orderTracker.estimatedTimeValue')}</Text>
+                  </View>
+                </View>
+              </View>
+              )}
+
+              <SectionCard icon="person-outline" title={t('checkout.yourDetails')}>
+                <View style={styles.detailRow}>
+                  <Ionicons name="person-circle-outline" size={18} color={Theme.colors.textSecondary} />
+                  <View style={styles.detailTextWrap}>
+                    <Text style={styles.detailLabel}>{t('checkout.yourName')}</Text>
+                    <Text style={styles.detailValue}>{name}</Text>
+                  </View>
+                </View>
+                <View style={styles.detailDivider} />
+                <View style={styles.detailRow}>
+                  <Ionicons name="call-outline" size={18} color={Theme.colors.textSecondary} />
+                  <View style={styles.detailTextWrap}>
+                    <Text style={styles.detailLabel}>{t('checkout.yourPhone')}</Text>
+                    <Text style={styles.detailValue}>{phone}</Text>
+                  </View>
+                </View>
+              </SectionCard>
+
+              {deliveryNotes ? (
+                <SectionCard icon="document-text-outline" title={t('checkout.deliveryNotes')}>
+                  <Text style={styles.plainValue}>{deliveryNotes}</Text>
+                </SectionCard>
+              ) : null}
+            </View>
+          </ScrollView>
+
+          <View style={[styles.footer, { paddingBottom: insets.bottom }]}>
+            <Button
+              title={t('checkout.confirmAndPay')}
+              onPress={handleGoToPayment}
+              accessibilityLabel={t('checkout.confirmAndPay')}
+            />
+            <TouchableOpacity
+              style={styles.editButton}
+              onPress={() => setStep('form')}
+            >
+              <Text style={styles.editButtonText}>{t('common.back')}</Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
       </View>
     );
   }
@@ -599,7 +606,8 @@ export default function CheckoutScreen() {
     <View style={styles.container}>
       <KeyboardAvoidingView
         style={styles.flex}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        keyboardVerticalOffset={0}
       >
         <View style={[styles.header, { paddingTop: insets.top + Theme.spacing.sm }]}>
           <TouchableOpacity
@@ -866,7 +874,7 @@ export default function CheckoutScreen() {
         </ScrollView>
 
         {/* Footer */}
-        <View style={[styles.footer, { paddingBottom: Theme.spacing.md + insets.bottom }]}>
+        <View style={[styles.footer, { paddingBottom: insets.bottom }]}>
           <TouchableOpacity
             style={[styles.confirmButton, !isFormValid && styles.confirmButtonDisabled]}
             onPress={handleReviewOrder}
