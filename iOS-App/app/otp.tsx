@@ -96,19 +96,16 @@ export default function OtpScreen() {
       console.error('[sendOtp] code:', e?.code, '| message:', e?.message);
       sentRef.current = false;
       setResendCooldown(0);
-      if (e?.code === 'auth/too-many-requests') {
-        setError(t('auth.otp.tooManyRequests'));
-      } else if (e?.code === 'auth/invalid-phone-number') {
-        setError(t('auth.otp.invalidPhone') ?? 'Invalid phone number format.');
-      } else if (e?.code === 'auth/quota-exceeded') {
-        setError('SMS quota exceeded. Please try again later.');
-      } else if (e?.code === 'auth/captcha-check-failed') {
-        setError('Security check failed. Please restart the app.');
-      } else if (e?.code === 'auth/missing-phone-number') {
-        setError('Phone number is missing.');
-      } else {
-        setError(`${t('auth.otp.sendError')} (${e?.code ?? 'unknown'})`);
-      }
+      // DEBUG: show full error on screen — remove before final release
+      const debugInfo = [
+        `code: ${e?.code ?? 'none'}`,
+        `message: ${e?.message ?? 'none'}`,
+        `nativeCode: ${e?.nativeErrorCode ?? 'none'}`,
+        `nativeMsg: ${e?.nativeErrorMessage ?? 'none'}`,
+        `userInfo: ${e?.userInfo ? JSON.stringify(e.userInfo) : 'none'}`,
+      ].join('\n');
+      setError(`DEBUG ERROR:\n${debugInfo}`);
+      return;
     } finally {
       setIsSendingOtp(false);
       sendingRef.current = false;
