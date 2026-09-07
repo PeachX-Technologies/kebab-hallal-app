@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Animated,
+  Keyboard,
   KeyboardAvoidingView,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -105,6 +107,7 @@ export default function OtpScreen() {
         `userInfo: ${e?.userInfo ? JSON.stringify(e.userInfo) : 'none'}`,
       ].join('\n');
       setError(`DEBUG ERROR:\n${debugInfo}`);
+      Keyboard.dismiss();
       return;
     } finally {
       setIsSendingOtp(false);
@@ -198,6 +201,11 @@ export default function OtpScreen() {
         style={styles.flex}
         behavior="padding"
       >
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
         <View style={styles.content}>
           {/* Back */}
           <TouchableOpacity
@@ -330,6 +338,7 @@ export default function OtpScreen() {
           </TouchableOpacity>
 
         </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -338,10 +347,14 @@ export default function OtpScreen() {
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: Theme.colors.background },
   flex: { flex: 1 },
+  scrollContent: {
+    flexGrow: 1,
+  },
   content: {
-    flex: 1,
+    flexGrow: 1,
     paddingHorizontal: Theme.spacing.xl,
     paddingTop: Theme.spacing.md,
+    paddingBottom: Theme.spacing.xl,
     alignItems: 'center',
   },
 
