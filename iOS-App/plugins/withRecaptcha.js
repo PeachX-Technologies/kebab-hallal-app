@@ -1,53 +1,62 @@
 const { withPodfile } = require('@expo/config-plugins');
 
 /**
- * Sets DEFINES_MODULE = YES on RecaptchaInterop via a pre_install hook.
+ * Sets DEFINES_MODULE = YES on RecaptchaInterop so FirebaseAuth (Swift)
+ * can import it as a module when building as static libraries.
  *
- * Why this approach:
- * - forceStaticLinking gets overridden by Expo's own module system
- * - Adding a duplicate pod declaration causes conflicts
- * - pre_install runs after pod resolution but before compilation,
- *   giving us direct access to the build settings of every pod target
- *
- * Without this, FirebaseAuth (a Swift pod) cannot import RecaptchaInterop
- * because it has no module map, causing:
+ * Without this, signInWithPhoneNumber throws:
  *   "The reCAPTCHA SDK is not linked to your app"
+ *
+ * Strategy:
+ * - If a post_install block already exists in the Podfile, inject our
+ *   logic inside it (CocoaPods only allows one post_install block)
+ * - If no post_install block exists, add one before the first target block
  */
 module.exports = function withRecaptcha(config) {
   return withPodfile(config, (config) => {
-    const contents = config.modResults.contents;
+    let contents = config.modResults.contents;
 
     // Already patched — skip
     if (contents.includes('withRecaptcha')) {
       return config;
     }
 
-    const hook = `
-# withRecaptcha: enable module maps for RecaptchaInterop so FirebaseAuth can import it
-pre_install do |installer|
-  installer.pod_targets.each do |pod|
-    if pod.name == 'RecaptchaInterop'
-      pod.pod_target_xcconfig['DEFINES_MODULE'] = 'YES'
-      pod.pod_target_xcconfig['SWIFT_INCLUDE_PATHS'] = '$(PODS_ROOT)/Headers/Public/RecaptchaInterop'
+    const recaptchaSnippet = `
+  # withRecaptcha: enable module map for RecaptchaInterop so FirebaseAuth can import it
+  installer.pods_project.targets.each do |target|
+    if target.name == 'RecaptchaInterop'
+      target.build_configurations.each do |config|
+        config.build_settings['DEFINES_MODULE'] = 'YES'
+      end
     end
-  end
+  end`;
+
+    if (contents.includes('post_install do |installer|')) {
+      // Inject inside the existing post_install block, right after the opening line
+      contents = contents.replace(
+        'post_install do |installer|',
+        `post_install do |installer|\n${recaptchaSnippet}`
+      );
+    } else {
+      // No existing post_install — add a new one before the first target block
+      const newBlock = `
+post_install do |installer|
+${recaptchaSnippet}
 end
 `;
-
-    const lines = contents.split('\n');
-
-    // Insert just before the first target block
-    const targetIndex = lines.findIndex(
-      (line) => line.trim().startsWith("target '") && line.includes('do')
-    );
-
-    if (targetIndex !== -1) {
-      lines.splice(targetIndex, 0, hook);
-    } else {
-      lines.push(hook);
+      const lines = contents.split('\n');
+      const targetIndex = lines.findIndex(
+        (line) => line.trim().startsWith("target '") && line.includes('do')
+      );
+      if (targetIndex !== -1) {
+        lines.splice(targetIndex, 0, newBlock);
+      } else {
+        lines.push(newBlock);
+      }
+      contents = lines.join('\n');
     }
 
-    config.modResults.contents = lines.join('\n');
+    config.modResults.contents = contents;
     return config;
   });
 };
