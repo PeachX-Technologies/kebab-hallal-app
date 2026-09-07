@@ -19,6 +19,28 @@ import { useLocale } from '../context/LocaleContext';
 import { OTP_LENGTH, RESEND_COOLDOWN_SECONDS } from '../constants';
 import Theme from '../theme';
 import { useOtpAutoFill } from 'expo-otp-autofill';
+import { Platform } from 'react-native';
+
+// Helper: wait for RNFBMessaging to register an APNs token before
+// calling signInWithPhoneNumber. Without this, Firebase falls back to
+// reCAPTCHA (which is not linked) and throws AUTH/UNKNOWN.
+async function waitForAPNSToken(timeoutMs = 5000): Promise<void> {
+  if (Platform.OS !== 'ios') return;
+  try {
+    const messaging = require('@react-native-firebase/messaging').default;
+    const token = await Promise.race([
+      messaging().getToken(),
+      new Promise<null>((resolve) => setTimeout(() => resolve(null), timeoutMs)),
+    ]);
+    if (token) {
+      console.log('[OTP] APNs/FCM token ready');
+    } else {
+      console.warn('[OTP] APNs token timed out — proceeding anyway');
+    }
+  } catch (e) {
+    console.warn('[OTP] Could not get APNs token:', e);
+  }
+}
 
 // Guards against duplicate SMS sends: only one send in flight at a time, so
 // remounts (StrictMode, navigation) never fire a second SMS concurrently.
@@ -91,6 +113,9 @@ export default function OtpScreen() {
     }
 
     try {
+      // Wait for APNs token registration before attempting phone auth.
+      // If this is skipped, Firebase falls back to reCAPTCHA which is not linked.
+      await waitForAPNSToken();
       const result = await auth().signInWithPhoneNumber(phoneRef.current);
       setConfirmationResult(result);
       sentRef.current = true;
