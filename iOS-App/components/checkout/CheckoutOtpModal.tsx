@@ -111,7 +111,7 @@ export default function CheckoutOtpModal({ visible, name, phone, onVerified, onC
       } else if (e?.code === 'auth/missing-phone-number') {
         setError('Phone number is missing.');
       } else {
-        setError(`${t('auth.otp.sendError')} (${e?.code ?? 'unknown'})`);
+        setError(e?.message || e?.code || t('auth.otp.sendError'));
       }
     } finally {
       setIsSendingOtp(false);
