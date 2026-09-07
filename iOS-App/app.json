@@ -57,6 +57,7 @@
     "plugins": [
       "expo-router",
       "./plugins/withRNFirebaseStaticFrameworks.js",
+      "./plugins/withRecaptcha.js",
       [
         "expo-splash-screen",
         {
@@ -98,9 +99,7 @@
               "RNFBAuth",
               "RNFBFirestore",
               "RNFBMessaging",
-              "RNFBAnalytics",
-              "RecaptchaEnterprise",
-              "RecaptchaInterop"
+              "RNFBAnalytics"
             ]
           }
         }
