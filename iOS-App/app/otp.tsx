@@ -429,9 +429,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: Theme.spacing.sm,
     justifyContent: 'center',
+    flexWrap: 'nowrap',
   },
   otpBox: {
     flex: 1,
+    minWidth: 44,
     maxWidth: 48,
     height: 56,
     borderRadius: Theme.borderRadii.md,
@@ -484,14 +486,17 @@ const styles = StyleSheet.create({
   // Error / hint
   errorRow: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     gap: Theme.spacing.xs,
     marginBottom: Theme.spacing.sm,
+    paddingHorizontal: Theme.spacing.sm,
   },
   errorText: {
     color: Theme.colors.error,
     fontSize: Theme.fontSizes.sm,
     textAlign: 'center',
+    flex: 1,
+    flexShrink: 1,
   },
   hint: {
     color: Theme.colors.textSecondary,
