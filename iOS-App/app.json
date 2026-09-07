@@ -57,7 +57,6 @@
     "plugins": [
       "expo-router",
       "./plugins/withRNFirebaseStaticFrameworks.js",
-      "./plugins/withRecaptcha.js",
       [
         "expo-splash-screen",
         {
