@@ -81,6 +81,22 @@ jobs:
       - name: Generate native iOS project
         run: npx expo prebuild --platform ios --clean
 
+      - name: Configure code signing on app target only
+        run: |
+          python3 -c "
+          import os
+          pbxproj = 'ios/KebabHallal.xcodeproj/project.pbxproj'
+          with open(pbxproj, 'r') as f:
+              content = f.read()
+          content = content.replace(
+              'PRODUCT_BUNDLE_IDENTIFIER = com.mh.kebabhallal;',
+              'PRODUCT_BUNDLE_IDENTIFIER = com.mh.kebabhallal;\n\t\t\t\tPROVISIONING_PROFILE_SPECIFIER = \"' + os.environ['PROFILE_UUID'] + '\";\n\t\t\t\tCODE_SIGN_STYLE = Manual;'
+          )
+          with open(pbxproj, 'w') as f:
+              f.write(content)
+          print('Successfully injected manual signing and profile into KebabHallal target')
+          "
+
       - name: Install CocoaPods
         run: pod install
         working-directory: iOS-App/ios
@@ -121,16 +137,14 @@ jobs:
           </plist>
           EOF
 
-          # Build and Archive with manual signing, distribution certificate, and workspace
+          # Build and Archive (without global PROVISIONING_PROFILE_SPECIFIER so Pods are not affected)
           xcodebuild \
             -workspace "${PROJECT_NAME}.xcworkspace" \
             -scheme "$PROJECT_NAME" \
             -configuration Release \
             -archivePath "$RUNNER_TEMP/app.xcarchive" \
             -destination "generic/platform=iOS" \
-            CODE_SIGN_STYLE="Manual" \
             DEVELOPMENT_TEAM="${TEAM_ID}" \
-            PROVISIONING_PROFILE_SPECIFIER="${PROFILE_UUID}" \
             CODE_SIGN_IDENTITY="${SIGNING_IDENTITY}" \
             clean archive
 
