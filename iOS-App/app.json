@@ -13,7 +13,7 @@
                              "supportsTablet":  false,
                              "bundleIdentifier":  "com.mh.kebabhallal",
                              "appleTeamId": "9NY2HWU6U2",
-                             "buildNumber":  "3",
+                             "buildNumber":  "4",
                              "googleServicesFile":  "./GoogleService-Info.plist",
                              "infoPlist":  {
                                                "ITSAppUsesNonExemptEncryption":  false,
