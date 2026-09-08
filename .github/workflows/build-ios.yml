@@ -58,7 +58,12 @@ jobs:
           security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
           security list-keychains -d user -s "$KEYCHAIN_PATH" $(security list-keychains -d user | tr -d '"')
 
+          # Find exact signing identity
+          CERT_IDENTITY=$(security find-identity -v -p codesigning "$KEYCHAIN_PATH" | head -1 | grep -o '".*"' | tr -d '"')
+          echo "Found signing identity: $CERT_IDENTITY"
+
           echo "KEYCHAIN_PATH=$KEYCHAIN_PATH" >> $GITHUB_ENV
+          echo "CERT_IDENTITY=$CERT_IDENTITY" >> $GITHUB_ENV
 
       - name: Decode provisioning profile
         env:
@@ -88,6 +93,7 @@ jobs:
           XCODEPROJ=$(find . -name "*.xcodeproj" -maxdepth 1 | head -1)
           PROJECT_NAME=$(basename "$XCODEPROJ" .xcodeproj)
           TEAM_ID="${{ secrets.APPLE_TEAM_ID || '9NY2HWU6U2' }}"
+          SIGNING_IDENTITY="${CERT_IDENTITY:-iPhone Distribution}"
           BUNDLE_ID="com.mh.kebabhallal"
 
           # Export options for manual distribution signing
@@ -102,6 +108,8 @@ jobs:
             <string>${TEAM_ID}</string>
             <key>signingStyle</key>
             <string>manual</string>
+            <key>signingCertificate</key>
+            <string>${SIGNING_IDENTITY}</string>
             <key>provisioningProfiles</key>
             <dict>
               <key>${BUNDLE_ID}</key>
@@ -113,7 +121,7 @@ jobs:
           </plist>
           EOF
 
-          # Build and Archive with manual signing and workspace
+          # Build and Archive with manual signing, distribution certificate, and workspace
           xcodebuild \
             -workspace "${PROJECT_NAME}.xcworkspace" \
             -scheme "$PROJECT_NAME" \
@@ -123,6 +131,7 @@ jobs:
             CODE_SIGN_STYLE="Manual" \
             DEVELOPMENT_TEAM="${TEAM_ID}" \
             PROVISIONING_PROFILE_SPECIFIER="${PROFILE_UUID}" \
+            CODE_SIGN_IDENTITY="${SIGNING_IDENTITY}" \
             clean archive
 
           # Export IPA
