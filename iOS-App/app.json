@@ -12,6 +12,7 @@
                  "ios":  {
                              "supportsTablet":  false,
                              "bundleIdentifier":  "com.mh.kebabhallal",
+                             "appleTeamId": "9NY2HWU6U2",
                              "buildNumber":  "3",
                              "googleServicesFile":  "./GoogleService-Info.plist",
                              "infoPlist":  {
