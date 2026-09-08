@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "iOS-App/**"
+      - ".github/workflows/build-ios.yml"
   workflow_dispatch:
   release:
     types: [published]
@@ -87,8 +88,9 @@ jobs:
           XCODEPROJ=$(find . -name "*.xcodeproj" -maxdepth 1 | head -1)
           PROJECT_NAME=$(basename "$XCODEPROJ" .xcodeproj)
           TEAM_ID="${{ secrets.APPLE_TEAM_ID || '9NY2HWU6U2' }}"
+          BUNDLE_ID="com.mh.kebabhallal"
 
-          # Export options
+          # Export options for manual distribution signing
           cat > "$RUNNER_TEMP/ExportOptions.plist" << EOF
           <?xml version="1.0" encoding="UTF-8"?>
           <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -98,24 +100,29 @@ jobs:
             <string>app-store</string>
             <key>teamID</key>
             <string>${TEAM_ID}</string>
-            <key>uploadBitcode</key>
-            <false/>
+            <key>signingStyle</key>
+            <string>manual</string>
+            <key>provisioningProfiles</key>
+            <dict>
+              <key>${BUNDLE_ID}</key>
+              <string>${PROFILE_UUID}</string>
+            </dict>
             <key>uploadSymbols</key>
             <true/>
-            <key>compileBitcode</key>
-            <false/>
           </dict>
           </plist>
           EOF
 
-          # Build using .xcworkspace (required for CocoaPods dependencies)
+          # Build and Archive with manual signing and workspace
           xcodebuild \
             -workspace "${PROJECT_NAME}.xcworkspace" \
             -scheme "$PROJECT_NAME" \
             -configuration Release \
             -archivePath "$RUNNER_TEMP/app.xcarchive" \
             -destination "generic/platform=iOS" \
+            CODE_SIGN_STYLE="Manual" \
             DEVELOPMENT_TEAM="${TEAM_ID}" \
+            PROVISIONING_PROFILE_SPECIFIER="${PROFILE_UUID}" \
             clean archive
 
           # Export IPA
