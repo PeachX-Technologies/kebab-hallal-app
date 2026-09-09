@@ -81,6 +81,78 @@ jobs:
       - name: Generate native iOS project
         run: npx expo prebuild --platform ios --clean
 
+      - name: Copy RoutingAppCoverage asset
+        run: |
+          cp -R ios/KebabHallal/RoutingAppCoverage.xcassets ios/KebabHallal/RoutingAppCoverage.xcassets.bak 2>/dev/null || true
+          rm -rf ios/KebabHallal/RoutingAppCoverage.xcassets
+          mkdir -p ios/KebabHallal/RoutingAppCoverage.xcassets/RoutingAppCoverage.dataset
+          cat > ios/KebabHallal/RoutingAppCoverage.xcassets/Contents.json << 'EOF'
+          {
+            "info" : {
+              "author" : "xcode",
+              "version" : 1
+            }
+          }
+          EOF
+          cat > ios/KebabHallal/RoutingAppCoverage.xcassets/RoutingAppCoverage.dataset/Contents.json << 'EOF'
+          {
+            "info" : {
+              "author" : "xcode",
+              "version" : 1
+            },
+            "properties" : {
+              "provides-namespace" : false
+            }
+          }
+          EOF
+          cat > ios/KebabHallal/RoutingAppCoverage.xcassets/RoutingAppCoverage.dataset/data.json << 'EOF'
+          {
+            "metadata" : {
+              "version" : 1,
+              "template-version" : 1.0
+            },
+            "regions" : [
+              {
+                "country-code" : "IT",
+                "name" : "Italy"
+              },
+              {
+                "country-code" : "PK",
+                "name" : "Pakistan"
+              }
+            ]
+          }
+          EOF
+          echo "RoutingAppCoverage.xcassets created successfully"
+          ls -la ios/KebabHallal/RoutingAppCoverage.xcassets/
+
+      - name: Add RoutingAppCoverage to Xcode project
+        run: |
+          ruby -e '
+          require "xcodeproj"
+          
+          project_path = "ios/KebabHallal.xcodeproj"
+          project = Xcodeproj::Project.open(project_path)
+          
+          target = project.targets.find { |t| t.name == "KebabHallal" }
+          
+          # Check if already added
+          existing_ref = project.files.find { |f| f.path&.include?("RoutingAppCoverage.xcassets") }
+          
+          unless existing_ref
+            file_ref = project.main_group.new_reference("KebabHallal/RoutingAppCoverage.xcassets")
+            file_ref.last_known_file_type = "folder.assetcatalog"
+            
+            target.source_build_phase.add_file_reference(file_ref)
+            
+            puts "Added RoutingAppCoverage.xcassets to Xcode project"
+          else
+            puts "RoutingAppCoverage.xcassets already in project"
+          end
+          
+          project.save
+          '
+
       - name: Configure code signing on app target only
         run: |
           python3 -c "
