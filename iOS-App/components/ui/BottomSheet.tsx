@@ -13,8 +13,8 @@ import { useTheme } from '../../context/ThemeContext';
 import Theme from '../../theme';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
-const SHEET_MAX_HEIGHT = SCREEN_HEIGHT * 0.92;
-const DISMISS_THRESHOLD = 80;
+const SHEET_MAX_HEIGHT = SCREEN_HEIGHT * 0.75;
+const DISMISS_THRESHOLD = 30;
 const CLOSE_TRANSLATE_Y = SCREEN_HEIGHT;
 const CLOSE_DURATION = 300;
 
@@ -64,7 +64,7 @@ export default function BottomSheet({ visible, onClose, children }: BottomSheetP
 
   const panResponder = useRef(
     PanResponder.create({
-      onMoveShouldSetPanResponder: (_, gs) => gs.dy > 5,
+      onMoveShouldSetPanResponder: (_, gs) => gs.dy > 0,
       onPanResponderMove: (_, gs) => {
         if (gs.dy > 0) translateY.setValue(gs.dy);
       },
