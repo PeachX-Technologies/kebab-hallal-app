@@ -151,7 +151,11 @@ export default function RootLayout() {
               <AppStateProvider>
                 <CartProvider>
                   <OrderProvider>
-                    <StripeProvider publishableKey={STRIPE_PUBLISHABLE_KEY}>
+                    <StripeProvider
+                      publishableKey={STRIPE_PUBLISHABLE_KEY}
+                      merchantIdentifier="merchant.com.mh.kebabhallal"
+                      urlScheme="kebab-hallal"
+                    >
                       <StatusBarUpdater />
                       <AnalyticsTracker />
                       <View style={{ flex: 1 }}>
