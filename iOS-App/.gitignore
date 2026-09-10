@@ -9,3 +9,5 @@ expo-env.d.ts
 /android
 /ios
 *.log
+
+#Harris says to make a commit
