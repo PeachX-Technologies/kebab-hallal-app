@@ -2,7 +2,7 @@
     "expo":  {
                  "name":  "Kebab Hallal",
                  "slug":  "kebab-hallal-catania",
-                 "version":  "1.0.12",
+                 "version":  "1.0.13",
                  "orientation":  "portrait",
                  "icon":  "./assets/icons/icon.png",
                  "userInterfaceStyle":  "light",
@@ -13,7 +13,7 @@
                              "supportsTablet":  false,
                              "bundleIdentifier":  "com.mh.kebabhallal",
                              "appleTeamId": "9NY2HWU6U2",
-                             "buildNumber":  "5",
+                             "buildNumber":  "6",
                              "googleServicesFile":  "./GoogleService-Info.plist",
                              "infoPlist":  {
                                                "ITSAppUsesNonExemptEncryption":  false,
