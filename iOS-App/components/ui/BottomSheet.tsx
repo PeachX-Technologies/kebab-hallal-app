@@ -96,12 +96,17 @@ export default function BottomSheet({ visible, onClose, children }: BottomSheetP
 
       <Animated.View
         style={[styles.sheet, { backgroundColor: colors.surface, transform: [{ translateY }] }]}
-        {...panResponder.panHandlers}
       >
-        <View style={[styles.topAccent, { backgroundColor: colors.primary }]} />
+        <View
+          style={styles.draggableHeader}
+          accessible={false}
+          {...panResponder.panHandlers}
+        >
+          <View style={[styles.topAccent, { backgroundColor: colors.primary }]} />
 
-        <View style={styles.handleContainer}>
-          <View style={[styles.handle, { backgroundColor: colors.border }]} />
+          <View style={styles.handleContainer}>
+            <View style={[styles.handle, { backgroundColor: colors.border }]} />
+          </View>
         </View>
 
         <ScrollView
@@ -130,6 +135,10 @@ const styles = StyleSheet.create({
     borderTopRightRadius: Theme.borderRadii.xl,
     ...Theme.shadows.lg,
     overflow: 'hidden',
+  },
+  draggableHeader: {
+    borderTopLeftRadius: Theme.borderRadii.xl,
+    borderTopRightRadius: Theme.borderRadii.xl,
   },
   topAccent: {
     height: 4,
