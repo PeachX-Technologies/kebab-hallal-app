@@ -180,7 +180,7 @@ const seg = StyleSheet.create({
 /* ─── Main screen ─────────────────────────────────────────────── */
 export default function SettingsScreen() {
   const { t, locale, setLocale } = useLocale();
-  const { user, firebaseUser, isAuthenticated, saveProfile, logout } = useAuth();
+  const { user, firebaseUser, isAuthenticated, saveProfile, logout, deleteAccount } = useAuth();
   const { orderMode, setOrderMode, deliveryAvailable } = useAppState();
   const { recalculatePrices } = useCart();
   const { categories } = useMenu();
@@ -194,6 +194,7 @@ export default function SettingsScreen() {
   const [saved, setSaved] = useState(false);
   const [isDirty, setIsDirty] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     if (!deliveryAvailable && orderMode === 'delivery') {
@@ -293,6 +294,14 @@ export default function SettingsScreen() {
   const confirmLogout = async () => {
     setShowLogoutModal(false);
     await logout();
+    router.replace('/login');
+  };
+
+  const handleDeleteAccount = () => setShowDeleteModal(true);
+
+  const confirmDeleteAccount = async () => {
+    setShowDeleteModal(false);
+    await deleteAccount();
     router.replace('/login');
   };
 
@@ -509,6 +518,27 @@ export default function SettingsScreen() {
               onCancel={() => setShowLogoutModal(false)}
               destructive
             />
+
+            <TouchableOpacity
+              style={[styles.deleteButton, { borderColor: 'rgba(211,47,47,0.2)' }]}
+              onPress={handleDeleteAccount}
+              activeOpacity={0.85}
+              accessibilityLabel={t('settings.deleteAccount')}
+              accessibilityRole="button"
+            >
+              <Text style={[styles.deleteText, { color: colors.error }]}>{t('settings.deleteAccount')}</Text>
+            </TouchableOpacity>
+
+            <ConfirmDialog
+              visible={showDeleteModal}
+              title={t('settings.deleteAccount')}
+              message={t('settings.deleteAccountConfirm')}
+              confirmLabel={t('settings.deleteAccount')}
+              cancelLabel={t('common.cancel')}
+              onConfirm={confirmDeleteAccount}
+              onCancel={() => setShowDeleteModal(false)}
+              destructive
+            />
           </>
         ) : (
           <TouchableOpacity
@@ -633,6 +663,20 @@ const styles = StyleSheet.create({
     fontSize: Theme.fontSizes.md,
     fontWeight: Theme.fontWeights.semiBold,
     fontFamily: Theme.fontFamily.semiBold,
+  },
+
+  // ── Delete Account ──────────────────────────────────────
+  deleteButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: Theme.borderRadii.lg,
+    height: 48,
+    borderWidth: 1,
+  },
+  deleteText: {
+    fontSize: Theme.fontSizes.sm,
+    fontWeight: Theme.fontWeights.medium,
+    fontFamily: Theme.fontFamily.medium,
   },
 
   // ── Login prompt (unauthenticated) ──

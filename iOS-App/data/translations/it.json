@@ -300,6 +300,8 @@
     "loginPrompt": "Accedi per gestire il tuo profilo e le preferenze",
     "logout": "Esci",
     "logoutConfirm": "Sei sicuro di voler uscire?",
+    "deleteAccount": "Elimina Account",
+    "deleteAccountConfirm": "Sei sicuro di voler eliminare il tuo account? Questa azione non può essere annullata. Tutti i tuoi dati, inclusa la cronologia degli ordini e le preferenze, verranno rimossi permanentemente.",
     "saved": "Salvato con successo",
     "privacy": "Informativa sulla Privacy",
     "terms": "Termini e Condizioni",

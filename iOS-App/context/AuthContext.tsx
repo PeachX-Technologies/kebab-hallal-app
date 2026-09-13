@@ -7,7 +7,7 @@ import {
   unregisterPushNotifications,
   onTokenRefresh,
 } from '../services/notificationService';
-import { saveUserProfile, getUserProfile } from '../services/userService';
+import { saveUserProfile, getUserProfile, deleteUserProfile } from '../services/userService';
 
 export interface User {
   name: string;
@@ -34,6 +34,7 @@ interface AuthState {
   isLoading: boolean;
   login: (name: string, phone: string) => Promise<void>;
   logout: () => Promise<void>;
+  deleteAccount: () => Promise<void>;
   saveProfile: (profile: Partial<User>) => Promise<void>;
 }
 
@@ -202,6 +203,35 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } catch {}
   }, []);
 
+  const deleteAccount = useCallback(async () => {
+    const currentUid = auth().currentUser?.uid;
+    setUser(null);
+    try {
+      if (currentUid) {
+        await deleteUserProfile(currentUid);
+      }
+    } catch {}
+    try {
+      await auth().signOut();
+    } catch {}
+    try {
+      await Promise.all([
+        AsyncStorage.removeItem(STORAGE_KEYS.USER),
+        AsyncStorage.removeItem(STORAGE_KEYS.PROFILE_ADDRESS),
+        AsyncStorage.removeItem(STORAGE_KEYS.PROFILE_PHONE),
+        AsyncStorage.removeItem(STORAGE_KEYS.PROFILE_HOUSE),
+        AsyncStorage.removeItem(STORAGE_KEYS.PROFILE_CITY),
+        AsyncStorage.removeItem(STORAGE_KEYS.PROFILE_LAT),
+        AsyncStorage.removeItem(STORAGE_KEYS.PROFILE_LNG),
+        AsyncStorage.removeItem(STORAGE_KEYS.NOTIFICATIONS_ENABLED),
+        AsyncStorage.removeItem(STORAGE_KEYS.ORDERS),
+        AsyncStorage.removeItem(STORAGE_KEYS.CART),
+        AsyncStorage.removeItem(STORAGE_KEYS.PENDING_PAYMENT_INTENT_ID),
+        AsyncStorage.removeItem(STORAGE_KEYS.NOTIFIED_STATUSES),
+      ]);
+    } catch {}
+  }, []);
+
   const saveProfile = useCallback(async (profile: Partial<User>) => {
     setUser((prev) => {
       const current = prev || { name: '', phone: '' };
@@ -238,7 +268,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, firebaseUser, isAuthenticated: firebaseUser !== null || user !== null, isLoading, login, logout, saveProfile }}
+      value={{ user, firebaseUser, isAuthenticated: firebaseUser !== null || user !== null, isLoading, login, logout, deleteAccount, saveProfile }}
     >
       {children}
     </AuthContext.Provider>

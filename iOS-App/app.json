@@ -2,7 +2,7 @@
     "expo":  {
                  "name":  "Kebab Hallal",
                  "slug":  "kebab-hallal-catania",
-                 "version":  "1.0.13",
+                 "version":  "1.0.14",
                  "orientation":  "portrait",
                  "icon":  "./assets/icons/icon.png",
                  "userInterfaceStyle":  "light",
@@ -13,7 +13,7 @@
                              "supportsTablet":  false,
                              "bundleIdentifier":  "com.mh.kebabhallal",
                              "appleTeamId": "9NY2HWU6U2",
-                             "buildNumber":  "6",
+                             "buildNumber":  "7",
                              "googleServicesFile":  "./GoogleService-Info.plist",
                              "infoPlist":  {
                                                "ITSAppUsesNonExemptEncryption":  false,
@@ -30,14 +30,11 @@
                                                "NSCameraUsageDescription":  "Kebab Hallal Catania uses the camera to let you scan payment cards securely and share photos of your orders and support requests.",
                                                "NSPhotoLibraryUsageDescription":  "Kebab Hallal Catania uses your photo library to let you attach photos of your orders and support requests.",
                                                "NSPhotoLibraryAddUsageDescription":  "Kebab Hallal Catania lets you save your order receipts and support images to your photo library.",
-                                               "NSContactsUsageDescription":  "Kebab Hallal Catania uses your contacts only to autofill delivery recipient information when you choose to select a contact.",
-                                               "NSMicrophoneUsageDescription":  "Kebab Hallal Catania does not record audio; this permission is reserved for future support, delivery, and payment features.",
-                                               "NSLocationWhenInUseUsageDescription":  "Kebab Hallal Catania uses your location to confirm delivery areas and show nearby pickup points.",
-                                               "NSLocationAlwaysAndWhenInUseUsageDescription":  "Kebab Hallal Catania uses your location while the app is in use to confirm delivery areas and show nearby pickup points.",
-                                               "NSFaceIDUsageDescription":  "Kebab Hallal Catania uses Face ID optionally to securely authenticate you and speed up checkout.",
-                                               "NSUserTrackingUsageDescription":  "Kebab Hallal Catania does not track you across other apps; this permission is reserved for ad personalization only if you opt in.",
-                                               "NSBluetoothAlwaysUsageDescription":  "Kebab Hallal Catania uses Bluetooth only for optional in-store check-in and order pickup notifications.",
-                                               "NSBluetoothPeripheralUsageDescription":  "Kebab Hallal Catania uses Bluetooth only for optional in-store check-in and order pickup notifications.",
+                                                "NSContactsUsageDescription":  "Kebab Hallal Catania uses your contacts only to autofill delivery recipient information when you choose to select a contact.",
+                                                "NSMicrophoneUsageDescription":  "Kebab Hallal Catania does not record audio; this permission is reserved for future support, delivery, and payment features.",
+                                                "NSFaceIDUsageDescription":  "Kebab Hallal Catania uses Face ID optionally to securely authenticate you and speed up checkout.",
+                                                "NSBluetoothAlwaysUsageDescription":  "Kebab Hallal Catania uses Bluetooth only for optional in-store check-in and order pickup notifications.",
+                                                "NSBluetoothPeripheralUsageDescription":  "Kebab Hallal Catania uses Bluetooth only for optional in-store check-in and order pickup notifications.",
                                                "NSMotionUsageDescription":  "Kebab Hallal Catania does not use motion data; this permission is reserved for future features.",
                                                "NSCalendarsUsageDescription":  "Kebab Hallal Catania lets you add your scheduled order delivery to your calendar.",
                                                "NSRemindersUsageDescription":  "Kebab Hallal Catania lets you add order pickup and delivery reminders to your Reminders app.",
@@ -91,8 +88,8 @@
                                  [
                                      "expo-location",
                                      {
-                                         "locationAlwaysAndWhenInUsePermission":  "Allow Kebab Hallal Catania to use your location.",
-                                         "locationWhenInUsePermission":  "Allow Kebab Hallal Catania to use your location."
+                                          "locationAlwaysAndWhenInUsePermission":  "Kebab Hallal Catania uses your location to verify your delivery address and find the nearest pickup point when you place an order.",
+                                          "locationWhenInUsePermission":  "Kebab Hallal Catania uses your location to verify your delivery address and find the nearest pickup point when you place an order."
                                      }
                                  ],
                                  [

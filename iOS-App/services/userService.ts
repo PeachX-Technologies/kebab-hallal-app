@@ -1,4 +1,5 @@
 import { db } from '../utils/firestore';
+import auth from '../utils/firebase';
 
 export interface UserProfile {
   name: string;
@@ -62,4 +63,28 @@ export function subscribeUserProfile(
       onError?.(err);
     },
   );
+}
+
+export async function deleteUserProfile(uid: string): Promise<void> {
+  const userRef = db.collection('users').doc(uid);
+
+  const fcmSnapshot = await userRef.collection('fcmTokens').get();
+  const batch = db.batch();
+  fcmSnapshot.forEach((doc: any) => batch.delete(doc.ref));
+  await batch.commit();
+
+  const ordersSnapshot = await db
+    .collection('orders')
+    .where('userId', '==', uid)
+    .get();
+  const ordersBatch = db.batch();
+  ordersSnapshot.forEach((doc: any) => ordersBatch.delete(doc.ref));
+  await ordersBatch.commit();
+
+  await userRef.delete();
+
+  const currentUser = auth().currentUser;
+  if (currentUser) {
+    await currentUser.delete();
+  }
 }

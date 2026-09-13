@@ -300,6 +300,8 @@
     "loginPrompt": "Sign in to manage your profile and preferences",
     "logout": "Logout",
     "logoutConfirm": "Are you sure you want to logout?",
+    "deleteAccount": "Delete Account",
+    "deleteAccountConfirm": "Are you sure you want to delete your account? This action cannot be undone. All your data, including order history and preferences, will be permanently removed.",
     "saved": "Saved successfully",
     "privacy": "Privacy Policy",
     "terms": "Terms & Conditions",
